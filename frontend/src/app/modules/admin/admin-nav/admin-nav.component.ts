@@ -13,14 +13,4 @@ export class AdminNavComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  isHomeView() {
-    // return true if the current page is home
-    if (this.router.url.match('^/$')) {
-      return this.router.url.match('^/$');
-    }
-    else if (this.router.url.match('^/main-admin$')) {
-      return this.router.url.match('^/main-admin$');
-    }
-  }
-
 }

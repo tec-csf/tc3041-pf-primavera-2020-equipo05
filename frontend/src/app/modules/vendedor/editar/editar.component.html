@@ -1,68 +1,97 @@
 <body>
-<app-nav-bar></app-nav-bar>
-<div class="container pt-5 pb-5">
-  <div class="row justify-content-center pt-5">
+  <app-nav-bar></app-nav-bar>
+  <div class="container pt-5 pb-5">
+    <div class="row justify-content-center pt-5">
       <div class="col-md-12 col-lg-7 col-sm-12">
-          <h1 class="display-4 text-white text-center">Editar Producto</h1>
+        <h1 class="display-4 text-white text-center" >Editar Producto</h1>
       </div>
-  </div>
-  <div class="row justify-content-center pt-3">
-    <div class="col-lg-4 col-md-6 col-sm-10">
-        <div class="card">
-            <div class="card-body">
-                <form action="" #f="ngForm">
-                    <div class="form-group">
-                        <label >Nombre del producto:</label>
-                        <input [(ngModel)]="product.name" value="{{product.name}}"type="text" class="form-control" name="name"required>
-                        
-                      </div>
-                    <div class="form-group">
-                        <label>Condición:</label>
-                        <input type="text" class="form-control" required>
-                      </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col">
-                                <label>Cantidad:</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                    <option>10</option>
-                                  </select>
-                                </div>
-
-                          </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Precio:</label>
-                        <input [(ngModel)]="product.price" [value]="product.price" type="number" class="form-control" name="price"required>
-                      </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Descripción:</label>
-                        <textarea class="form-control" [value]="product.description" id="exampleFormControlTextarea1" rows="2" [(ngModel)]="product.description" name="description"required></textarea>
-                      </div>
-                    <div class="form-group">
-                        <label>Agregar imagen:</label>
-                        <input type="file" id="img" name="img" accept="image/*">
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block" (click)="updateProduct(name,description,price)">Guardar cambios</button>
-                  </form>
-            </div>
-          </div>
     </div>
-</div>
+    <div class="row justify-content-center pt-3">
+      <div class="col-lg-4 col-md-6 col-sm-10">
+        <div class="card">
+          <div class="card-body">
+            <form action="" #f="ngForm" ngNativeValidate>
+              <div class="form-group">
+                <label >Nombre del producto:</label>
+                <input
+                  [(ngModel)]="product.name"
+                  value="{{ product.name }}"
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label >Condición:</label>
+                <input type="text" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col">
+                    <label >Cantidad:</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <select class="form-control" id="exampleFormControlSelect1">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>6</option>
+                      <option>7</option>
+                      <option>8</option>
+                      <option>9</option>
+                      <option>10</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label >Precio:</label>
+                <input
+                  [(ngModel)]="product.price"
+                  [value]="product.price"
+                  type="number"
+                  class="form-control"
+                  name="price"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlTextarea1"
+                  >Descripción:</label
+                >
+                <textarea
+                  class="form-control"
+                  [value]="product.description"
+                  id="exampleFormControlTextarea1"
+                  rows="2"
+                  [(ngModel)]="product.description"
+                  name="description"
+                  required
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label >Agregar imagen:</label>
+                <input type="file" id="img" name="img" accept="image/*" />
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary btn-block"
+                (click)="updateProduct(name, description, price)"
 
-</div>
-<app-footer></app-footer>
-<body>
+              >
+                Guardar cambios
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>
+  <body></body>
+</body>

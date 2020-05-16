@@ -1,60 +1,91 @@
 <app-nav-bar></app-nav-bar>
-    <div class="container-fluid parallax-3">
-        <div class="row align-items-center pt-4">
-            <div class="col align-self-center perfil text-center">
-                <img src="{{user.profile_pic}}" alt="">
-                <hr>
-                <p style="font-family: 'Roboto mono', monospace; color: white; font-size: 32px;">{{user.name}}</p>
-
-            </div>
-        </div>
+<div class="container-fluid parallax-3">
+  <div class="row align-items-center pt-4">
+    <div class="col align-self-center perfil text-center">
+      <img src="{{ user.profile_pic }}" alt="" />
+      <hr />
+      <p
+        style="
+          font-family: 'Roboto mono', monospace;
+          color: white;
+          font-size: 32px;
+        "
+      >
+        {{ user.name }}
+      </p>
     </div>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-10 p-4 list-inline-item">
-                <h1 class="display-3">Mis productos</h1>
-                <hr class="my-4">
-            </div>
-        </div>
-            <div class="row">
-                <div class="col col-lg-4" *ngFor= "let product of user.products; let i = index" >
-                    <div class="card">
-                        <img src="{{product.url}}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title" id="selected">{{product.name}}</h5>
-                            <p class="card-text">{{product.description}}</p>
-                            <p class="card-text">${{product.price}}.00</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                            <button type="button" class="btn btn-outline-info btn-block" routerLink="/editar" (click)="findProduct(i)">Editar</button>
-                            <hr>
-                            <button type="button" class="btn btn-outline-danger btn-block" (click)="findElement(i)">Eliminar</button>
-        
-                        </div>
-                        </div>
-                    </div>
-                 </div>
-        </div>
-        <div class="row justify-content-center pb-5">
-            <div class="col-sm-12 col-md-10 col-lg-8">
-                <button type="button" class="btn btn-outline-success btn-block" routerLink="/agregar">+</button>
-            </div>
-        </div>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center pb-3">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-  <app-footer></app-footer>
+  </div>
+</div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-10 p-4 list-inline-item">
+      <h1 class="display-3" >Mis productos</h1>
+      <hr class="my-4" />
+    </div>
+  </div>
+  <div class="row">
+    <div
+      class="col col-lg-4"
+      *ngFor="let product of user.products; let i = index"
+    >
+      <div class="card">
+        <img src="{{ product.url }}" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title" id="selected">{{ product.name }}</h5>
+          <p class="card-text">{{ product.description }}</p>
+          <p class="card-text">${{ product.price }}.00</p>
+          <p class="card-text">
+            <small class="text-muted">Last updated 3 mins ago</small>
+          </p>
+          <button
+            type="button"
+            class="btn btn-outline-info btn-block"
+            routerLink="/editar"
+            (click)="findProduct(i)"
 
+          >
+            Editar
+          </button>
+          <hr />
+          <button
+            type="button"
+            class="btn btn-outline-danger btn-block"
+            (click)="findElement(i)"
+
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-center pb-5">
+  <div class="col-sm-12 col-md-10 col-lg-8">
+    <button
+      type="button"
+      class="btn btn-outline-success btn-block"
+      routerLink="/agregar"
+    >
+      +
+    </button>
+  </div>
+</div>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center pb-3">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+<app-footer></app-footer>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../../../services/user.service'
-import {User} from '../../../interfaces/user'
-import { product } from 'src/app/interfaces/product';
+import {UserService} from '../../../services/user.service';
+import {User} from '../../../interfaces/user';
+import {Product } from 'src/app/interfaces/product';
 
 @Component({
   selector: 'app-perfil',
@@ -10,7 +10,7 @@ import { product } from 'src/app/interfaces/product';
 })
 export class PerfilComponent implements OnInit {
   user: User;
-  product: product;
+  product: Product;
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
@@ -22,7 +22,7 @@ export class PerfilComponent implements OnInit {
   }
   findProduct(index){
     this.userService.findProduct(index);
-    this.product=this.user.products[index];
+    this.product = this.user.products[index];
   }
 
 }

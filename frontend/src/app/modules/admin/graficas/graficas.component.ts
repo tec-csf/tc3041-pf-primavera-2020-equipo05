@@ -10,7 +10,7 @@ import { Label } from 'ng2-charts';
   styleUrls: ['./graficas.component.scss']
 })
 export class GraficasComponent implements OnInit {
-  
+
   public barChartOptions: ChartOptions = {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
@@ -26,13 +26,13 @@ export class GraficasComponent implements OnInit {
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
   public barChartPlugins = [pluginDataLabels];
-  
+
   public barChartData: ChartDataSets[] = [
     { data: [65, 59, 80], label: 'CDMX' },
     { data: [28, 48, 40], label: 'Toluca' },
     { data: [28, 48, 40], label: 'Tijuana' }
   ];
-  
+
   constructor() { }
 
   ngOnInit(): void {

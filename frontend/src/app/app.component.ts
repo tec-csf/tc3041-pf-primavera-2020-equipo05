@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { fader} from './route-animations'
+import { fader} from './route-animations';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -12,8 +12,9 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'charlieAngular';
+  animation = 'animation';
 
   prepareRoute(outlet: RouterOutlet) {
-    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData[this.animation];
   }
 }

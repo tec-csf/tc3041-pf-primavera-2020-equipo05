@@ -6,6 +6,7 @@ import { StatusDeEnvioComponent } from './status-de-envio/status-de-envio.compon
 import { GraficasComponent } from './graficas/graficas.component';
 import { AdminNavComponent } from './admin-nav/admin-nav.component';
 
+
 const routes: Routes = [
   {path: 'main-admin', component: MainAdminComponent},
   {path: 'product-status-update', component: ProductoStatusUpdateComponent},

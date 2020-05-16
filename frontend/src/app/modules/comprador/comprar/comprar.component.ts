@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-comprar',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ComprarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) {  }
 
   ngOnInit(): void {
+  }
+
+  onSubmit() {
+
+    alert('Producto comprado');
+
+    this.router.navigateByUrl('/home');
   }
 
 }

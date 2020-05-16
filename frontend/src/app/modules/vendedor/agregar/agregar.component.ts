@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../../../services/user.service'
-import { product } from 'src/app/interfaces/product';
-import {FormsModule, NgForm} from "@angular/forms";
+import {UserService} from '../../../services/user.service';
+import {Product } from 'src/app/interfaces/product';
+import {FormsModule, NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-agregar',
@@ -9,7 +9,7 @@ import {FormsModule, NgForm} from "@angular/forms";
   styleUrls: ['./agregar.component.scss']
 })
 export class AgregarComponent implements OnInit {
-  product: product = {id:0, name: "", description: "",price:0,url:"https://www.eluniversal.com.mx/sites/default/files/2020/02/13/xbox-one-jordan.jpg"};
+  product: Product = {id: 0, name: '', description: '', price: 0, url: 'https://www.eluniversal.com.mx/sites/default/files/2020/02/13/xbox-one-jordan.jpg'};
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {

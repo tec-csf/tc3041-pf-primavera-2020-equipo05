@@ -6,14 +6,15 @@ import { MainComponentsModule } from '../../main-components/main-components.modu
 
 import { ContactoComponent } from './contacto/contacto.component';
 import { NewsFeedComponent } from './news-feed/news-feed.component';
-
+import { StandoutDirective } from '../../directives/standout.directive';
 
 @NgModule({
   declarations: [ContactoComponent, NewsFeedComponent],
   imports: [
     CommonModule,
     InfoRoutingModule,
-    MainComponentsModule
-  ]
+    MainComponentsModule,
+    StandoutDirective,
+  ],
 })
-export class InfoModule { }
+export class InfoModule {}

@@ -1,7 +1,9 @@
 var passwordHash = require('password-hash');
-var hashedPassword = passwordHash.generate('password123');
+var passwords = ["diego123", "gabriel123", "naji123", "eduardo123", "pavla123", "derrick123", "sidonia123", "alvinia123", "trumaine123", "waneta123", "derward123", "noni123", "jeralee123", "murielle123", "sibyl123", "appolonia", "miles123", "norma123", "chuck123", "broddy123"]
 
-console.log(hashedPassword);
+var hashedPasswords = []
 
-console.log(passwordHash.verify('password123', hashedPassword)); // true
-console.log(passwordHash.verify('Password0', hashedPassword)); // false
+for (let index = 0; index < passwords.length; index++) {
+  hashedPasswords.push(passwordHash.generate(passwords[index]))
+
+}

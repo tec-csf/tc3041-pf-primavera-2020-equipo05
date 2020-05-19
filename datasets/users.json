@@ -21,7 +21,7 @@
     },
     {
         "_id": 2,
-        "profile_pic": "../assets/img/Diegolas.jpeg",
+        "profile_pic": "../assets/img/Naji.jpeg",
         "name": "Naji",
         "lname": "Sadaat",
         "dBirth": "10-02-1990",
@@ -31,12 +31,12 @@
     },
     {
         "_id": 3,
-        "profile_pic": "../assets/img/Schlemp.jpeg",
+        "profile_pic": "../assets/img/Eduardo.jpeg",
         "name": "Eduardo",
         "lname": "Harari",
-		    "dBirth": "22-09-1995",
+	"dBirth": "22-09-1995",
         "country": "Mexico",
-        "email": "gabschlam@gmail.com",
+        "email": "eharari@gmail.com",
         "password": "sha1$32a5aec7$1$0c3e6dfb21d8595c7f869cc79eeae70274121ffd"
     },
     {

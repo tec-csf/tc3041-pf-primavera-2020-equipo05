@@ -8,13 +8,20 @@ import {UserService} from '../../../services/user.service';
 })
 export class HomeComponent implements OnInit {
   products: any;
+  allProducts: any;
   constructor(private userService: UserService) {
 
   }
 
   ngOnInit(): void {
     this.products = this.userService.products;
-    console.log(this.products);
+    this.allProducts = [];
+    this.products.forEach(element => {
+      element.products.forEach(prd => {
+        console.log(prd);
+        this.allProducts.push(prd);
+      })
+    });
   }
 
 }

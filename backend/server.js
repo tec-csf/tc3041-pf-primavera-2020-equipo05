@@ -12,6 +12,8 @@ const bodyParser = require('body-parser');
 const bodyParserJSON = bodyParser.json();
 const bodyParserURLEncoded = bodyParser.urlencoded({ extended: true });
 
+
+
 app.use(bodyParserJSON);
 app.use(bodyParserURLEncoded);
 
@@ -21,9 +23,11 @@ router.get('/', (req, res) => {
   res.send('Hello from home');
 });
 
+router.get('/home', (req, res) => {
+  res.send('Hello from another home')
+  console.log("Estas en home hijo y tambien estas conectado jeje bai")
+});
+
 app.use(router);
 app.listen(propierties.PORT, () => console.log(`Server runing on port ${propierties.PORT}`));
 
-app.get('/home'), async (req, res) => {
-    console.log("Estas en home hijo y tambien estas conectado jeje bai")
-}

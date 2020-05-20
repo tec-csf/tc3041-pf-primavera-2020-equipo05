@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as data from '../../data/data.json';
+import * as products_users from '../../../../datasets/productsUsers.json'
 import { Router } from '@angular/router';
 import {Product} from '../interfaces/product';
 
@@ -8,8 +9,7 @@ import {Product} from '../interfaces/product';
   providedIn: 'root'
 })
 export class UserService {
-  datos: any = (data as any).default;
-  products: any = data.products;
+  products: any = (products_users as any).default;
   users: any = data.users;
   userProducts: any = this.users[0].products;
   product: Product;
@@ -18,6 +18,7 @@ export class UserService {
 
   addProduct(datos: any) {
     this.products.push(datos);
+    //index 0 should be change to index of current suer
     this.users[0].products.push(datos);
     this.router.navigateByUrl('/home');
   }

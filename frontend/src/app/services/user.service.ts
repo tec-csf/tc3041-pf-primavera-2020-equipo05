@@ -3,6 +3,7 @@ import * as data from '../../data/data.json';
 import * as products_users from '../../../../datasets/productsUsers.json'
 import { Router } from '@angular/router';
 import {Product} from '../interfaces/product';
+import * as carritos from '../../../../datasets/carritos.json'
 
 
 @Injectable({
@@ -13,6 +14,7 @@ export class UserService {
   users: any = data.users;
   userProducts: any = this.users[0].products;
   product: Product;
+  carrito: any = (carritos as any).default;
 
   constructor(private router: Router) { }
 

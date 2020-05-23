@@ -14,8 +14,10 @@ import { EditarComponent } from './modules/vendedor/editar/editar.component';
 import { ComprarComponent } from './modules/comprador/comprar/comprar.component';
 import { LogInComponent } from './modules/shared/log-in/log-in.component';
 import { CrearCuentaComponent } from './modules/shared/crear-cuenta/crear-cuenta.component';
+import {CarritoComponent} from './modules/comprador/carrito/carrito.component';
 import { AdminModule } from './modules/admin/admin.module';
 import { MainComponentsModule } from './main-components/main-components.module';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { MainComponentsModule } from './main-components/main-components.module';
     ComprarComponent,
     LogInComponent,
     CrearCuentaComponent,
+    CarritoComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -37,7 +41,8 @@ import { MainComponentsModule } from './main-components/main-components.module';
     AdminModule,
     MainComponentsModule,
     BrowserModule,
-    FormsModule
+    FormsModule,
+    MDBBootstrapModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -10,6 +10,7 @@ import { EditarComponent } from './modules/vendedor/editar/editar.component';
 import { ComprarComponent } from './modules/comprador/comprar/comprar.component';
 import { LogInComponent } from './modules/shared/log-in/log-in.component';
 import { CrearCuentaComponent } from './modules/shared/crear-cuenta/crear-cuenta.component';
+import {CarritoComponent} from './modules/comprador/carrito/carrito.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent, data: {animation: 'isLeft'} },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'editar', component: EditarComponent, data: {animation: 'isLeft'}  },
   { path: 'comprar', component: ComprarComponent, data: {animation: 'isRight'}  },
   { path: 'agregar', component: AgregarComponent, data: {animation: 'isLeft'}  },
+  {path: 'carrito', component: CarritoComponent}
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

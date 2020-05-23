@@ -1,0 +1,48 @@
+<app-nav-bar></app-nav-bar>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-10 p-4 list-inline-item">
+          <h1 class="display-3" >Mi carrito</h1>
+          <hr class="my-4" />
+        </div>
+      </div>
+    <div class="row" *ngFor="let product of carrito.products">
+        <div class="col col-lg-4"></div>
+        <div class="col col-lg-4">
+            <div class="card mt-3" >
+                <img src="{{ product.url }}" style="width: auto; height:200px" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title">{{ product.name }}</h5>
+                  <p class="card-text">
+                    {{ product.description }}
+                  </p>
+                  <p class="card-text">${{ product.price }}.00.</p>
+                </div>
+              </div>
+        </div>
+        <div class="col col-lg-4"></div>
+        
+    </div>
+    <div class="row">
+        <div class="col col-lg-4"></div>
+        <div class="col col-lg-4">
+            <button
+            type="button"
+            class="btn btn-primary btn-lg btn-block"
+            routerLink="/comprar"
+          >
+            Pagar
+          </button>
+          <hr />
+          <button
+            type="button"
+            class="btn btn-outline-danger btn-block"
+            routerLink="/home"
+          >
+            Seguir comprando
+          </button>
+        </div>
+        <div class="col col-lg-4"></div>
+    </div>
+</div>
+

@@ -13,28 +13,24 @@
             <div class="container">
               <div class="row">
                 <div class="col-md-4 order-md-2 mb-4">
-                  <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between">
-                      <span>Total (USD)</span>
-                      <strong>$20</strong>
-                    </li>
-                  </ul>
                   <div class="row" *ngFor="let product of carrito.products">
                     <div class="col col-lg-12">
                         <div class="card mt-3" >
                             <img src="{{ product.url }}" style="width: auto; height:200px" class="card-img-top" alt="..." />
                             <div class="card-body">
                               <h5 class="card-title">{{ product.name }}</h5>
-                              <p class="card-text">
-                                {{ product.description }}
-                              </p>
                               <p class="card-text">${{ product.price }}.00.</p>
                             </div>
                           </div>
                     </div>
-                    
                 </div>
-                </div>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between">
+                      <span>Total (USD)</span>
+                      <strong>${{ total }}.00</strong>
+                    </li>
+              </ul>
+            </div>
                 <div class="col-md-8 order-md-1">
                   <h4 class="mb-3" >Dirección de envío</h4>
                   <form action="" (submit)="onSubmit()" ngNativeValidate>

@@ -7,4 +7,4 @@ var ComprasSchema = new Schema({
     validation: String
 }, { versionKey: false });
 
-module.exports = mongoose.model("Compra", ComprasSchema);
+module.exports = mongoose.model("Compra", ComprasSchema, 'compras');

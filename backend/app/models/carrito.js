@@ -6,4 +6,4 @@ var CarritosSchema = new Schema({
     products: Array
 }, { versionKey: false });
 
-module.exports = mongoose.model("Carrito", CarritosSchema);
+module.exports = mongoose.model("Carrito", CarritosSchema, 'carritos');

@@ -7,7 +7,6 @@ var morgan = require("morgan");
 
 app.use(morgan("dev"));
 
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -49,7 +48,7 @@ var newsFeed = require("./app/models/newsFeed");
 router
   .route("/productsUsers")
   .post(async function (req, res) {
-    if (req.body.name && req.body.condition && req.body.description && req.body.price && req.body.url) {
+    if (req.body.idUser && req.body.name && req.body.condition && req.body.description && req.body.price && req.body.url) {
       var idProd
       await productUser.aggregate([{ $unwind: '$products' }, { $sort: {'products.idProd': -1}},{$limit: 1}], function (err, idProduct) {
         if (err) {
@@ -112,7 +111,7 @@ router
   });
 
 router
-  .route("/productsUsers/:id_product")
+  .route("/products/:id_product")
   .get(function (req, res) {
     productUser.aggregate([{ $unwind: '$products' }, { $match: {'products.idProd': parseInt(req.params.id_product)}}], function (error, product) {
       if (error) {
@@ -172,6 +171,23 @@ router
       res.json({ mensaje: "Producto eliminado" })
     });
   });
+
+// GET PRODUCTOS DEL USUARIO
+router
+  .route("/productsUsers/:id_user")
+  .get(function (req, res) {
+    productUser.find({idUser: req.params.id_user}, function (error, products) {
+      if (error) {
+        res.status(404).send({ message: "not found" });
+        return;
+      }
+      if (products == "") {
+        res.status(404).send({ products: "not found" });
+        return;
+      }
+      res.status(200).send(products);
+    });
+  })
 
 
 // NEWS FEED
@@ -326,7 +342,7 @@ router
         }
         else {
           User.remove({_id: req.params.id_user},
-            function (err, alumno) {
+            function (err) {
               if (err) {
                 res.send(err);
               }
@@ -340,6 +356,162 @@ router
     }
   });
 
+// CARRITO
+router
+  .route("/carrito")
+  .get(function (req, res) {
+    Carrito.find({ }, function (err, carrito) {
+      if (err) {
+        res.send(err);
+      }
+      res.status(200).send(carrito);
+    })
+  });
+
+router
+  .route("/carrito/:id_user")
+  .get(function (req, res) {
+    Carrito.find({idUser: req.params.id_user}, function (error, carrito) {
+      if (error) {
+        res.status(404).send({ message: "not found" });
+        return;
+      }
+      if (carrito == null) {
+        res.status(404).send({ carrito: "not found" });
+        return;
+      }
+      res.status(200).send(carrito);
+    });
+  })
+  .post(async function (req, res) {
+    if (req.body.idProd) {
+      var product;
+      await productUser.aggregate([{ $unwind: '$products' }, { $match: {'products.idProd': parseInt(req.body.idProd)}},{$project: {'products':1, _id:0}}], function (err, producto) {
+        if (err) {
+          res.send(err);
+        }
+        console.log(producto[0].products)
+        product = producto[0].products
+      })
+
+      Carrito.findOneAndUpdate({idUser: req.params.id_user}, {$push: {products: product}}, async function (error, result) {
+        if (error) {
+          res.status(404).send({ message: "not found" });
+          return;
+        }
+        if (result == null) {
+          var carrito = new Carrito();
+
+          carrito.idUser = req.params.id_user;
+          carrito.products = product;
+          try {
+            await carrito.save(function (err) {
+              if (err) {
+                console.log(err);
+                if (err.name == "ValidationError")
+                  res.status(400).send({ error: err.message });
+              }
+            });
+            res.json({ mensaje: "Producto agregado al carrito" });
+          } catch (error) {
+            res.status(500).send({ error: error });
+          }
+        }
+        else {
+          res.json({ mensaje: "Producto agregado al carrito" })
+        }
+      });
+    }
+    else {
+      res.status(400).send({error: "missing fields"})
+    }
+    
+  })
+  .delete(function (req, res) {
+    var idProd = parseInt(req.body.idProd);
+
+    Carrito.updateOne({idUser: req.params.id_user}, {$pull: {products: {"idProd": idProd}}}, function (error, result) {
+      console.log(result)
+      if (error) {
+        console.log(error)
+        res.status(404).send({ message: "not found" });
+        return;
+      }
+      if (result == null) {
+        res.status(404).send({ result: "not found" });
+        return;
+      }
+      else{
+        res.json({ mensaje: "Producto eliminado del carrito" })
+      }
+    });
+  });
+
+// COMPRA
+router
+  .route("/compra")
+  .get(function (req, res) {
+    Compra.find({ }, function (err, carrito) {
+      if (err) {
+        res.send(err);
+      }
+      res.status(200).send(carrito);
+    })
+  });
+
+router
+  .route("/compra/:id_user")
+  .get(function (req, res) {
+    Compra.find({idUser: req.params.id_user}, function (error, compra) {
+      if (error) {
+        res.status(404).send({ message: "not found" });
+        return;
+      }
+      if (compra == null) {
+        res.status(404).send({ compra: "not found" });
+        return;
+      }
+      res.status(200).send(compra);
+    });
+  })
+  .post(async function (req, res) {
+      var productos;
+      await Carrito.find({idUser: req.params.id_user}, function (err, carrito) {
+        if (err) {
+          res.send(err);
+        }
+        console.log(carrito[0].products)
+        productos = carrito[0].products
+      })
+
+      var compra = new Compra();
+      compra.idUser = req.params.id_user;
+      compra.products = productos;
+      compra.validation = "Listo";
+
+      try {
+        await compra.save(function (err) {
+          if (err) {
+            console.log(err);
+            if (err.name == "ValidationError")
+              res.status(400).send({ error: err.message });
+          }
+          else {
+            Carrito.remove({idUser: req.params.id_user},
+              function (err) {
+                if (err) {
+                  res.send(err);
+                }
+                res.json({ mensaje: "Compra creada con exito" });
+              }
+            );
+          }
+        });
+      } catch (error) {
+        res.status(500).send({ error: error });
+      }  
+    
+  });
 
 app.use("/api", router); //url base de nuestro api que tiene las rutas en el routerglobal.fetch = require('node-fetch');
 router.use(function(req, res, next) {

@@ -1,9 +1,12 @@
 var express = require("express"); //importar express
+const cors = require('cors');
 var app = express();
+app.use(cors());
 var bodyParser = require("body-parser");
 var morgan = require("morgan");
 
 app.use(morgan("dev"));
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

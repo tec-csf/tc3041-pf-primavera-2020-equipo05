@@ -7,14 +7,15 @@ import { MainComponentsModule } from '../../main-components/main-components.modu
 import { LogInComponent } from './log-in/log-in.component';
 import { CrearCuentaComponent } from './crear-cuenta/crear-cuenta.component';
 import { PerfilComponent } from './perfil/perfil.component';
-
+import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [LogInComponent, CrearCuentaComponent, PerfilComponent],
   imports: [
     CommonModule,
     SharedRoutingModule,
-    MainComponentsModule
+    MainComponentsModule,
+    HttpClientModule,
   ]
 })
 export class SharedModule { }

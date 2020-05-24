@@ -14,14 +14,18 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.products = this.userService.products;
-    this.allProducts = [];
-    this.products.forEach(element => {
-      element.products.forEach(prd => {
-        console.log(prd);
-        this.allProducts.push(prd);
-      })
-    });
+    this.userService.getProducts().subscribe(productos => {
+      this.products = productos;
+      console.log(this.products);
+      this.allProducts = [];
+      this.products.forEach(element => {
+        element.products.forEach(prd => {
+          console.log(prd);
+          this.allProducts.push(prd);
+        })
+      });
+    })
+
   }
 
 }

@@ -7,7 +7,8 @@ import { FormProductoComponent } from './form-producto/form-producto.component';
 import { ImageCarrouselComponent } from './image-carrousel/image-carrousel.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { BrowserModule } from '@angular/platform-browser'
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule} from '@angular/common/http';
 @NgModule({
   declarations: [
     FooterComponent,
@@ -21,8 +22,8 @@ import { BrowserModule } from '@angular/platform-browser'
     FormProductoComponent,
     ImageCarrouselComponent,
     NavBarComponent,
-    BrowserModule
-
+    BrowserModule,
+    HttpClientModule,
   ],
 })
 export class MainComponentsModule {}

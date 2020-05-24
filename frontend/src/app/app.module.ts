@@ -18,7 +18,7 @@ import {CarritoComponent} from './modules/comprador/carrito/carrito.component';
 import { AdminModule } from './modules/admin/admin.module';
 import { MainComponentsModule } from './main-components/main-components.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-
+import { HttpClientModule} from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +42,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     MainComponentsModule,
     BrowserModule,
     FormsModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

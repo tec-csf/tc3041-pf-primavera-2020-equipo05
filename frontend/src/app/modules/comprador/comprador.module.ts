@@ -7,7 +7,7 @@ import { MainComponentsModule } from '../../main-components/main-components.modu
 import { HomeComponent } from './home/home.component';
 import { ComprarComponent } from './comprar/comprar.component';
 import { CarritoComponent } from './carrito/carrito.component';
-
+import { HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -16,6 +16,7 @@ import { CarritoComponent } from './carrito/carrito.component';
     CompradorRoutingModule,
     CommonModule,
     MainComponentsModule,
+    HttpClientModule,
   ]
 })
 export class CompradorModule { }

@@ -4,20 +4,31 @@ import * as products_users from '../../../../datasets/productsUsers.json'
 import { Router } from '@angular/router';
 import {Product} from '../interfaces/product';
 import * as carritos from '../../../../datasets/carritos.json'
+import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
+import { map, catchError, tap} from 'rxjs/operators'
+import { Observable } from 'rxjs';
+const endpoint = 'http://localhost:8080/api/productsUsers';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  products: any = (products_users as any).default;
   users: any = data.users;
   userProducts: any = this.users[0].products;
   product: Product;
   carrito: any = (carritos as any).default;
+  products: any;
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Access-Control-Allow-Origin': '*'
+    })
+  }  
+  constructor(private router: Router, private http: HttpClient) { }
 
-  constructor(private router: Router) { }
-
+  getProducts(){
+    return this.http.get(endpoint);
+  }
   addProduct(datos: any) {
     this.products.push(datos);
     //index 0 should be change to index of current suer

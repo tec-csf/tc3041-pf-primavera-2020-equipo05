@@ -1,7 +1,6 @@
 var express = require("express"); //importar express
 var session = require('express-session');
 var redis = require("redis");
-var redisStore = require('connect-redis')(session);
 var redisClient = redis.createClient();
 
 const cors = require('cors');
@@ -16,14 +15,6 @@ app.use(morgan("dev"));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-app.use(session({
-  secret: 'mysecret',
-  // create new redis store
-  store: new redisStore({host: 'localhost', port: port, client: redisClient}),
-  saveUninitialized: false,
-  resave: false
-}));
 
 var uri = "mongodb+srv://bases_user:bases123@cluster0-f9acl.gcp.mongodb.net/vendeTuProducto?retryWrites=true&w=majority";
 
@@ -44,6 +35,10 @@ router.use(function (req, res, next) {
   next();
 }); //funcion habilita el middleware
 
+/* redisClient.on('connect', function() {
+  console.log("Connected")
+}) */
+
 /* router.get("/", function (req, res) {
   res.json({
     mensaje: "keep alive",
@@ -55,8 +50,7 @@ router.get('/', function(req, res) {
     res.status(200).send(req.session.key);
   }
   else {
-    //res.status(400).send({error: "No session started"})
-    res.redirect('http://localhost:4200/log-in')
+    res.status(400).send({error: "No session started"})
   }
 })
 
@@ -87,8 +81,8 @@ router
           return;
         }
         else {
-          req.session.key = {_id: usuarioDB._id, email: usuarioDB.email};
-          res.status(200).send({ message: "Login success"});
+          redisClient.set(usuarioDB._id, usuarioDB.email, redis.p);
+          res.status(200).send({ message: "Login success", key: req.session.key});
         }
       });
     }
@@ -305,8 +299,12 @@ router
                         as: 'user'}
                       },
                       {$unwind: '$user' },
+                      {$addFields : {
+                        "time": { $dateToString: { format: "%d-%m-%Y %H:%M", date: "$_id", timezone: "America/Mexico_City"}}
+                      }},
                       {$project: 
-                        {'user.name': 1,
+                        {"time":1,
+                        'user.name': 1,
                         'user.profile_pic': 1,
                         'message': 1}
                       }

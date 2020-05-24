@@ -7,13 +7,13 @@ import * as carritos from '../../../../datasets/carritos.json'
 import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
 import { map, catchError, tap} from 'rxjs/operators'
 import { Observable } from 'rxjs';
-const endpoint = 'http://localhost:8080/api/allProducts/';
-
+const endpoint = 'http://localhost:8080/api/';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  result: any;
   users: any = data.users;
   userProducts: any = this.users[0].products;
   product: Product;
@@ -27,8 +27,13 @@ export class UserService {
   constructor(private router: Router, private http: HttpClient) { }
 
   getProducts(i){
-    return this.http.get(endpoint + i);
+    return this.http.get(endpoint + "allProducts/" + i);
   }
+
+  login(user: any): Observable<any> {
+    return this.http.post(endpoint + "login", user);
+  }
+
   addProduct(datos: any) {
     this.products.push(datos);
     //index 0 should be change to index of current suer

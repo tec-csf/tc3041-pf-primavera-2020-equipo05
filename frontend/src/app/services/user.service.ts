@@ -7,7 +7,7 @@ import * as carritos from '../../../../datasets/carritos.json'
 import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
 import { map, catchError, tap} from 'rxjs/operators'
 import { Observable } from 'rxjs';
-const endpoint = 'http://localhost:8080/api/productsUsers';
+const endpoint = 'http://localhost:8080/api/allProducts/';
 
 
 @Injectable({
@@ -23,11 +23,11 @@ export class UserService {
     headers: new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
     })
-  }  
+  }
   constructor(private router: Router, private http: HttpClient) { }
 
-  getProducts(){
-    return this.http.get(endpoint);
+  getProducts(i){
+    return this.http.get(endpoint + i);
   }
   addProduct(datos: any) {
     this.products.push(datos);

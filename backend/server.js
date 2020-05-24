@@ -101,12 +101,28 @@ router
     }
     
   })
-  .get(function (req, res) {
-    productUser.find({ }, function (err, products) {
+router
+  .route("/allProducts/:page")
+  .get(async function (req, res) {
+    const resPerPage = 3;
+    const page = req.params.page;
+
+    await productUser.find({ }).skip((resPerPage * page)-resPerPage).limit(resPerPage).sort({idUser: 1}).exec(async function (err, products) {
       if (err) {
         res.send(err);
       }
-      res.status(200).send(products);
+      else {
+        await productUser.count({}, function (err, count) {
+          if (err) {
+            res.send(err);
+          }
+          else {
+            res.status(200).send({products, currentPage: parseInt(page), pages: Math.ceil(count / resPerPage)});
+
+          }
+        })
+      }
+      //res.status(200).send(products);
     })
   });
 

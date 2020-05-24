@@ -9,16 +9,21 @@ import {UserService} from '../../../services/user.service';
 export class HomeComponent implements OnInit {
   products: any;
   allProducts: any;
+  currentPage: number;
+  pages: number;
+
   constructor(private userService: UserService) {
 
   }
 
   ngOnInit(): void {
-    this.userService.getProducts().subscribe(productos => {
+    this.userService.getProducts(1).subscribe(productos => {
       this.products = productos;
+      this.currentPage = this.products.currentPage;
+      this.pages = this.products.pages;
       console.log(this.products);
       this.allProducts = [];
-      this.products.forEach(element => {
+      this.products.products.forEach(element => {
         element.products.forEach(prd => {
           console.log(prd);
           this.allProducts.push(prd);
@@ -26,6 +31,22 @@ export class HomeComponent implements OnInit {
       });
     })
 
+  }
+
+  getProductsPage(i) {
+    this.userService.getProducts(i).subscribe(productos => {
+      this.products = productos;
+      this.currentPage = this.products.currentPage;
+      this.pages = this.products.pages;
+      console.log(this.products);
+      this.allProducts = [];
+      this.products.products.forEach(element => {
+        element.products.forEach(prd => {
+          console.log(prd);
+          this.allProducts.push(prd);
+        })
+      });
+    })
   }
 
 }

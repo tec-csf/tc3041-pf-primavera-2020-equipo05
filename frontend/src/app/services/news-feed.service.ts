@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
-const endpoint = 'http://localhost:8080/api/';
+const endpoint = 'http://localhost:8080/api/newsFeed';
 
 
 @Injectable({
@@ -17,6 +17,10 @@ export class NewsFeedService {
   constructor(private router: Router, private http: HttpClient) { }
 
   getFeed(){
-    return this.http.get(endpoint + "newsFeed/");
+    return this.http.get(endpoint);
+  }
+
+  postFeed(post: any){
+    return this.http.post(endpoint, post);
   }
 }

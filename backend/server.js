@@ -302,6 +302,7 @@ router
                       {$addFields : {
                         "time": { $dateToString: { format: "%d-%m-%Y %H:%M", date: "$_id", timezone: "America/Mexico_City"}}
                       }},
+                      {$sort: {'_id': -1}},
                       {$project: 
                         {"time":1,
                         'user.name': 1,

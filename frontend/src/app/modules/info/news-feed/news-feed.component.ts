@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {NewsFeedService} from '../../../services/news-feed.service';
 
 @Component({
@@ -8,8 +9,9 @@ import {NewsFeedService} from '../../../services/news-feed.service';
 })
 export class NewsFeedComponent implements OnInit {
   feed: any;
+  message: string;
 
-  constructor(private newsFeedService: NewsFeedService) {
+  constructor(private router: Router, private newsFeedService: NewsFeedService) {
 
   }
 
@@ -18,6 +20,17 @@ export class NewsFeedComponent implements OnInit {
       this.feed = feed
     })
 
+  }
+
+  postFeed() {
+    const post = {idUser: 1, message: this.message};
+    this.newsFeedService.postFeed(post).subscribe(data => {
+      alert("Post creado")
+      this.router.navigateByUrl('/home');
+    },
+    error => {
+      console.log(error)
+    });
   }
 
 }

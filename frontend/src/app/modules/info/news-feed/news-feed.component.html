@@ -9,12 +9,20 @@
       </div>
       <div class="row justify-content-center pb-3">
         <div class="col-md-7">
+         <form (submit)="postFeed()" ngNativeValidate>
           <div class="form-group">
             <h5>Escribir:</h5>
-            <textarea class="form-control" placeholder="¿En qué estas pensando?" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea
+              class="form-control"
+              placeholder="¿En qué estas pensando?"
+              id="exampleFormControlTextarea1"
+              rows="3"
+              [(ngModel)]= "message"
+              name = "message"
+              required></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Compartir</button>
-
+        </form>
         </div>
       </div>
       <div class="row justify-content-center pb-3">

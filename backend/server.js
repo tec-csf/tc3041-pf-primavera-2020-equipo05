@@ -45,14 +45,14 @@ router.use(function (req, res, next) {
   });
 }); */
 
-router.get('/', function(req, res) {
+/* router.get('/', function(req, res) {
   if (req.session.key) {
     res.status(200).send(req.session.key);
   }
   else {
     res.status(400).send({error: "No session started"})
   }
-})
+}) */
 
 // declarar los modelos
 var Product = require("./app/models/product");
@@ -81,7 +81,7 @@ router
           return;
         }
         else {
-          redisClient.set(usuarioDB._id, usuarioDB.email, redis.p);
+          //redisClient.set(usuarioDB._id, usuarioDB.email, redis.p);
           res.status(200).send({ message: "Login success", key: req.session.key});
         }
       });

@@ -6,4 +6,4 @@ var NewsFeedSchema = new Schema({
     message: String
 }, { versionKey: false });
 
-module.exports = mongoose.model("NewsFeed", NewsFeedSchema);
+module.exports = mongoose.model("NewsFeed", NewsFeedSchema, 'newsFeed');

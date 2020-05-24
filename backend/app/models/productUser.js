@@ -4,6 +4,6 @@ var Schema = mongoose.Schema;
 var productsUsersSchema = new Schema({
     idUser: Number,
     products: Array
-}, {collection: 'productsUsers'}, { versionKey: false });
+}, { versionKey: false });
 
-module.exports = mongoose.model("ProductUser", productsUsersSchema);
+module.exports = mongoose.model("ProductUser", productsUsersSchema, 'productsUsers');

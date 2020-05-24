@@ -35,7 +35,7 @@ router.get("/", function (req, res) {
   });
 });
 
-//declarar los modelos
+// declarar los modelos
 var Product = require("./app/models/product");
 var User = require("./app/models/user");
 var productUser = require("./app/models/productUser");
@@ -46,37 +46,57 @@ var newsFeed = require("./app/models/newsFeed");
 router
   .route("/productsUsers")
   .post(async function (req, res) {
-    var idProd
-    await productUser.aggregate([{ $unwind: '$products' }, { $sort: {'products.idProd': -1}},{$limit: 1}], function (err, idProduct) {
-      if (err) {
-        res.send(err);
-      }
-      console.log(idProduct[0].products.idProd)
-      idProd = parseInt(idProduct[0].products.idProd)+1;
-    })
+    if (req.body.name && req.body.condition && req.body.description && req.body.price && req.body.url) {
+      var idProd
+      await productUser.aggregate([{ $unwind: '$products' }, { $sort: {'products.idProd': -1}},{$limit: 1}], function (err, idProduct) {
+        if (err) {
+          res.send(err);
+        }
+        console.log(idProduct[0].products.idProd)
+        idProd = parseInt(idProduct[0].products.idProd)+1;
+      })
 
-    var producto = {
-      idProd: idProd,
-      name: req.body.name,
-      condition: req.body.condition,
-      description: req.body.description,
-      quantity: 1, 
-      price: parseInt(req.body.price), 
-      url: req.body.url,
+      var producto = {
+        idProd: idProd,
+        name: req.body.name,
+        condition: req.body.condition,
+        description: req.body.description,
+        quantity: 1, 
+        price: parseInt(req.body.price), 
+        url: req.body.url,
+      }
+
+      productUser.findOneAndUpdate({idUser: req.body.idUser}, {$push: {products: producto}}, async function (error, result) {
+        if (error) {
+          res.status(404).send({ message: "not found" });
+          return;
+        }
+        if (result == null) {
+          var product = new productUser();
+
+          product.idUser = req.body.idUser;
+          product.products = producto;
+          try {
+            await product.save(function (err) {
+              if (err) {
+                console.log(err);
+                if (err.name == "ValidationError")
+                  res.status(400).send({ error: err.message });
+              }
+            });
+            res.json({ mensaje: "Producto agregado" });
+          } catch (error) {
+            res.status(500).send({ error: error });
+          }
+        }
+        else {
+          res.json({ mensaje: "Producto agregado" })
+        }
+      });
     }
-
-    productUser.findOneAndUpdate({idUser: 1}, {$push: {products: producto}}, function (error, result) {
-      if (error) {
-        res.status(404).send({ message: "not found" });
-        return;
-      }
-      if (result == null) {
-        res.status(404).send({ result: "not found" });
-        return;
-      }
-      res.json({ mensaje: "Producto agregado" })
-    });
-
+    else {
+      res.status(400).send({error: "missing fields"})
+    }
     
   })
   .get(function (req, res) {
@@ -89,80 +109,234 @@ router
   });
 
 router
-  .route("/alumnos/:id_alumno")
+  .route("/productsUsers/:id_product")
   .get(function (req, res) {
-    Alumno.findById(req.params.id_alumno, function (error, alumno) {
+    productUser.aggregate([{ $unwind: '$products' }, { $match: {'products.idProd': parseInt(req.params.id_product)}}], function (error, product) {
       if (error) {
         res.status(404).send({ message: "not found" });
         return;
       }
-      if (alumno == null) {
-        res.status(404).send({ alumno: "not found" });
+      if (product == "") {
+        res.status(404).send({ product: "not found" });
         return;
       }
-      res.status(200).send(alumno);
+      res.status(200).send(product);
     });
   })
   .put(function (req, res) {
-    Alumno.findById(req.params.id_alumno, function (err, alumno) {
+    if (req.body.name && req.body.condition && req.body.description && req.body.price && req.body.url) {
+      var idProd = parseInt(req.params.id_product);
+    
+      var producto = {
+        idProd: idProd,
+        name: req.body.name,
+        condition: req.body.condition,
+        description: req.body.description,
+        quantity: 1, 
+        price: parseInt(req.body.price), 
+        url: req.body.url,
+      }
+
+      productUser.findOneAndUpdate({"products.idProd": idProd}, {$set: {"products.$": producto}}, function (error, result) {
+        if (error) {
+          res.status(404).send({ message: "not found" });
+          return;
+        }
+        if (result == null) {
+          res.status(404).send({ result: "not found" });
+          return;
+        }
+        res.json({ mensaje: "Producto actualizado" })
+      });
+    }
+    else {
+      res.status(400).send({error: "missing fields"})
+    }
+  })
+  .delete(function (req, res) {
+    var idProd = parseInt(req.params.id_product);
+
+    productUser.updateOne({"products.idProd": idProd}, {$pull: {products: {"idProd": idProd}}}, function (error, result) {
+      if (error) {
+        console.log(error)
+        res.status(404).send({ message: "not found" });
+        return;
+      }
+      if (result == null) {
+        res.status(404).send({ result: "not found" });
+        return;
+      }
+      res.json({ mensaje: "Producto eliminado" })
+    });
+  });
+
+
+// NEWS FEED
+router
+  .route("/newsFeed")
+  .post(async function (req, res) {
+    var post = new newsFeed();
+    if (req.body.idUser && req.body.message) { 
+      post.idUser = req.body.idUser;
+      post.message = req.body.message;
+     
+      try {
+        await post.save(function (err) {
+          if (err) {
+            console.log(err);
+            if (err.name == "ValidationError")
+              res.status(400).send({ error: err.message });
+          }
+        });
+        res.json({ mensaje: "Post creado" });
+      } catch (error) {
+        res.status(500).send({ error: error });
+      }  
+    }
+    else {
+      res.status(400).send({error: "missing fields"})
+    }
+  })
+  .get(function (req, res) {
+    newsFeed.aggregate([
+                      {$lookup: 
+                        {from: 'users',localField: 'idUser',
+                        foreignField: '_id',
+                        as: 'user'}
+                      },
+                      {$unwind: '$user' },
+                      {$project: 
+                        {'user.name': 1,
+                        'user.profile_pic': 1,
+                        'message': 1}
+                      }
+                    ],function (err, result) {
+      if (err) {
+        res.send(err);
+        return;
+      }
+      res.status(200).send(result);
+    })
+  });
+
+
+// USERS
+router
+  .route("/users")
+  .post(async function (req, res) {
+    if (req.body.profile_pic && req.body.name && req.body.lname && req.body.dBirth && req.body.country && req.body.email && req.body.password) {
+      var idUser;
+      var passwordHash = require('password-hash');
+      var user = new User();
+      await User.findOne(function (err, result) {
+        if (err) {
+          res.send(err);
+        }
+        idUser = parseInt(result._id)+1;
+        user._id = idUser;
+      }).sort('-_id')
+
+      user.profile_pic = req.body.profile_pic;
+      user.name = req.body.name;
+      user.lname = req.body.lname;
+      user.dBirth = req.body.dBirth
+      user.country = req.body.country;
+      user.email = req.body.email;
+      user.password =  passwordHash.generate(req.body.password);
+      
+      try {
+        await user.save(function (err) {
+          if (err) {
+            console.log(err);
+            if (err.name == "ValidationError")
+              res.status(400).send({ error: err.message });
+          }
+          else{
+            res.json({ mensaje: "Usuario creado" });
+          }
+        });
+        
+      } catch (error) {
+        res.status(500).send({ error: error });
+      }  
+    }
+    else {
+      res.status(400).send({error: "missing fields"})
+    }
+  })
+  .get(function (req, res) {
+    User.find({ }, function (err, usuarios) {
       if (err) {
         res.send(err);
       }
-      alumno.nombre = req.body.nombre;
-      alumno.save(function (err) {
-        if (err) {
-          res.send(err);
-        }
-        res.json({ message: "alumno actualizado" });
-      });
-    });
-  })
-  .delete(function (req, res) {
-    Alumno.remove(
-      {
-        _id: req.params.id_alumno,
-      },
-      function (err, alumno) {
-        if (err) {
-          res.send(err);
-        }
-        res.json({ mensaje: "borrado con exito" });
-      }
-    );
+      res.status(200).send(usuarios);
+    }).select('-password').sort({ _id: 1 })
   });
 
-router.route("/alumnosv2/:matricula").get(function (req, res) {
-  Alumno.find({ matricula: req.params.matricula }, function (error, alumno) {
-    if (error) {
-      res.status(404).send({ message: "not found" });
-      return;
-    }
-    if (alumno == null) {
-      res.status(404).send({ alumno: "not found" });
-      return;
-    }
-    res.status(200).send(alumno);
-  }).sort({ nombre: 1 });
-});
-
-router.route("/clases").post(async function (req, res) {
-  var clase = new Clase();
-  clase.nombre = req.body.nombre;
-  clase.semestre = req.body.semestre;
-  try {
-    //alumno.validate();
-    await clase.save(function (err) {
-      if (err) {
-        console.log(err);
-        if (err.name == "ValidationError")
-          res.status(400).send({ error: err.message });
+router
+  .route("/users/:id_user")
+  .get(function (req, res) {
+    User.findById(req.params.id_user, function (error, usuario) {
+      if (error) {
+        res.status(404).send({ message: "not found" });
+        return;
       }
-    });
-    res.json({ mensaje: "Clase creado" });
-  } catch (error) {
-    res.status(500).send({ error: error });
-  }
-});
+      if (usuario == null) {
+        res.status(404).send({ usuario: "not found" });
+        return;
+      }
+      res.status(200).send(usuario);
+    }).select('-password');
+  })
+  .put(function (req, res) {
+    if (req.body.profile_pic && req.body.name && req.body.lname && req.body.dBirth && req.body.country && req.body.email) {
+      User.findById(req.params.id_user, function (err, user) {
+        if (err) {
+          res.send(err);
+        }
+        user.profile_pic = req.body.profile_pic;
+        user.name = req.body.name;
+        user.lname = req.body.lname;
+        user.dBirth = req.body.dBirth
+        user.country = req.body.country;
+        user.email = req.body.email;
+
+        user.save(function (err) {
+          if (err) {
+            res.send(err);
+          }
+          res.json({ message: "usuario actualizado" });
+        });
+      });
+    }
+    else {
+      res.status(400).send({error: "missing fields"})
+    }
+  })
+  .delete(async function (req, res) {
+    try {
+      await productUser.deleteOne( { idUser: req.params.id_user}, function (err) {
+        if (err) {
+          console.log(err);
+          if (err.name == "ValidationError")
+            res.status(400).send({ error: err.message });
+        }
+        else {
+          User.remove({_id: req.params.id_user},
+            function (err, alumno) {
+              if (err) {
+                res.send(err);
+              }
+              res.json({ mensaje: "Usuario borrado con exito" });
+            }
+          );
+        }
+      });
+    } catch (error) {
+      res.status(500).send({ error: error });
+    }
+  });
+
 
 app.use("/api", router); //url base de nuestro api que tiene las rutas en el routerglobal.fetch = require('node-fetch');
 router.use(function(req, res, next) {

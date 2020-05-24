@@ -1,16 +1,29 @@
 var express = require("express"); //importar express
+var session = require('express-session');
+var redis = require("redis");
+var redisStore = require('connect-redis')(session);
+var redisClient = redis.createClient();
+
 const cors = require('cors');
 var app = express();
 app.use(cors());
 var bodyParser = require("body-parser");
 var morgan = require("morgan");
+var passwordHash = require('password-hash');
+var port = process.env.PORT || 8080; ///puerto disponible
 
 app.use(morgan("dev"));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8080; ///puerto disponible
+app.use(session({
+  secret: 'mysecret',
+  // create new redis store
+  store: new redisStore({host: 'localhost', port: port, client: redisClient}),
+  saveUninitialized: false,
+  resave: false
+}));
 
 var uri = "mongodb+srv://bases_user:bases123@cluster0-f9acl.gcp.mongodb.net/vendeTuProducto?retryWrites=true&w=majority";
 
@@ -31,11 +44,21 @@ router.use(function (req, res, next) {
   next();
 }); //funcion habilita el middleware
 
-router.get("/", function (req, res) {
+/* router.get("/", function (req, res) {
   res.json({
     mensaje: "keep alive",
   });
-});
+}); */
+
+router.get('/', function(req, res) {
+  if (req.session.key) {
+    res.status(200).send(req.session.key);
+  }
+  else {
+    //res.status(400).send({error: "No session started"})
+    res.redirect('http://localhost:4200/log-in')
+  }
+})
 
 // declarar los modelos
 var Product = require("./app/models/product");
@@ -44,6 +67,48 @@ var productUser = require("./app/models/productUser");
 var Carrito = require("./app/models/carrito");
 var Compra = require("./app/models/compra");
 var newsFeed = require("./app/models/newsFeed");
+
+router
+  .route("/login")
+  .post(function (req, res) {
+    if (req.body.email && req.body.password) {
+      User.findOne({email: req.body.email}, function (error, usuarioDB) {
+        if (error) {
+          res.status(500).send(error);
+          return;
+        }
+        if (!usuarioDB) {
+          res.status(400).send({ message: "Usuario o password incorrectos" });
+          return;
+        }
+
+        if (!passwordHash.verify(req.body.password, usuarioDB.password)) {
+          res.status(400).send({ message: "Usuario o password incorrectos" });
+          return;
+        }
+        else {
+          req.session.key = {_id: usuarioDB._id, email: usuarioDB.email};
+          res.status(200).send({ message: "Login success"});
+        }
+      });
+    }
+    else {
+      res.status(400).send({error: "missing fields"})
+    }
+  });
+
+router
+  .route("/logout")
+  .get(function (req, res) {
+    if (req.session.key) {
+      req.session.destroy();
+      res.status(200).send({ message: "Logout success"});
+    }
+    
+    else {
+      res.status(400).send({ message: "User not signed in"});
+    }
+  });
 
 router
   .route("/productsUsers")
@@ -261,7 +326,6 @@ router
   .post(async function (req, res) {
     if (req.body.profile_pic && req.body.name && req.body.lname && req.body.dBirth && req.body.country && req.body.email && req.body.password) {
       var idUser;
-      var passwordHash = require('password-hash');
       var user = new User();
       await User.findOne(function (err, result) {
         if (err) {

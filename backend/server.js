@@ -1,14 +1,17 @@
-var express = require("express"); //importar express
+var express = require('express');
+var redis   = require("redis");
 var session = require('express-session');
+var redisStore = require('connect-redis')(session);
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var Cookies = require('cookies');
 
-var redis = require("redis");
-var redisClient = redis.createClient();
-const redisStore = require('connect-redis')(session);
+var client  = redis.createClient();
+//var client1  = redis.createClient(); // prueba para cerar un cliente
+var app = express();
 
 const cors = require('cors');
-var app = express();
 app.use(cors());
-var bodyParser = require("body-parser");
 var morgan = require("morgan");
 var passwordHash = require('password-hash');
 var port = process.env.PORT || 8080; ///puerto disponible
@@ -17,6 +20,18 @@ app.use(morgan("dev"));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+
+app.get('/',function(req,res){  
+  // create new session object.
+  if(req.session.key) {
+      // if email key is sent redirect.
+      res.redirect('/home');
+  } else {
+      // else go to home page.
+      res.render('index.html');
+  }
+});
 
 var uri = "mongodb+srv://bases_user:bases123@cluster0-f9acl.gcp.mongodb.net/vendeTuProducto?retryWrites=true&w=majority";
 
@@ -37,17 +52,21 @@ router.use(function (req, res, next) {
   next();
 }); //funcion habilita el middleware
 
-redisClient.on('connect', function() {
+client.on('connect', function() {
   console.log("Connected")
 });
 app.use(session({
-  secret: 'ThisIsHowYouUseRedisSessionStorage',
-  name: '_redisPractice',
-  resave: false,
+  secret: 'ssshhhhh',
+  // create new redis store.
+  store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
   saveUninitialized: true,
-  cookie: { secure: false }, // Note that the cookie-parser module is no longer needed
-  store: new redisStore({ host: 'localhost', port: 6379, client: redisClient, ttl: 86400 }),
+  resave: false,
+  cookie: { secure: false }
 }));
+
+app.use(cookieParser("secretSign#143_!223"));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 /* router.get("/", function (req, res) {
   res.json({
@@ -91,7 +110,8 @@ router
           return;
         }
         else {
-          //redisClient.set(usuarioDB._id, usuarioDB.email, redis.p);
+          req.session.key=req.body.key;
+          client.setex(usuarioDB._id,120, usuarioDB.email);
           //res.status(200).send({ message: "Login success", key: req.session.key});
           res.status(200).send({ message: "Login success", idUser: usuarioDB._id});
 

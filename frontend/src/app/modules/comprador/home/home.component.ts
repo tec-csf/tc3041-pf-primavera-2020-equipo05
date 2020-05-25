@@ -27,9 +27,9 @@ export class HomeComponent implements OnInit {
         element.products.forEach(prd => {
           console.log(prd);
           this.allProducts.push(prd);
-        })
+        });
       });
-    })
+    });
 
   }
 
@@ -44,17 +44,17 @@ export class HomeComponent implements OnInit {
         element.products.forEach(prd => {
           console.log(prd);
           this.allProducts.push(prd);
-        })
+        });
       });
-    })
+    });
   }
 
   agregarAlCarrito(id) {
     this.userService.addProductToCarrito(id).subscribe(data => {
-      alert("Producto agregado al carrito")
+      alert('Producto agregado al carrito');
     },
     error => {
-      console.log(error)
+      console.log(error);
     });
   }
 

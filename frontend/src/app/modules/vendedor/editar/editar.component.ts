@@ -33,7 +33,7 @@ export class EditarComponent implements OnInit {
       url: this.product.url};
 
     this.userService.updateProduct(this.product.idProd, this.product).subscribe(data => {
-      alert("Producto editado")
+      alert('Producto editado');
       this.router.navigateByUrl('/perfil');
     },
     error => {

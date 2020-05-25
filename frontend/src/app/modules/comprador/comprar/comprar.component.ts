@@ -10,15 +10,14 @@ import {UserService} from '../../../services/user.service';
 export class ComprarComponent implements OnInit {
   carrito: any;
   total = 0;
-  constructor(private router: Router,private userService: UserService) {  }
+  constructor(private router: Router, private userService: UserService) {  }
 
   ngOnInit(): void {
     this.userService.getCarritoUser().subscribe(carrito => {
       this.carrito = carrito[0];
-      for (let index = 0; index < this.carrito.products.length; index++) {
-        this.total += this.carrito.products[index].price;
-        console.log("Price "+ this.carrito.products[index].price);
-      }
+      this.carrito.products.forEach(element => {
+        this.total += element.price;
+      });
     });
   }
 

@@ -15,18 +15,18 @@ export class PerfilComponent implements OnInit {
   product: Product;
   constructor(private userService: UserService, private router: Router) { }
 
-  ngOnInit():void {
+  ngOnInit(): void {
     this.userService.getProductsUser(1).subscribe(productos => {
       this.user = productos[0];
       this.userService.setUser(this.user.idUser);
-      this.products = this.user.products
-    })
+      this.products = this.user.products;
+    });
   }
 
   findElement(index){
     this.product = this.products[index];
     this.userService.removeProduct(this.product.idProd).subscribe(data => {
-      alert("Producto eliminado")
+      alert('Producto eliminado');
       this.router.navigateByUrl('/perfil');
     },
     error => {

@@ -19,6 +19,7 @@ import { AdminModule } from './modules/admin/admin.module';
 import { MainComponentsModule } from './main-components/main-components.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { HttpClientModule} from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +33,7 @@ import { HttpClientModule} from '@angular/common/http';
     LogInComponent,
     CrearCuentaComponent,
     CarritoComponent,
-    
+
   ],
   imports: [
     BrowserModule,

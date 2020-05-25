@@ -17,19 +17,19 @@ export class NewsFeedComponent implements OnInit {
 
   ngOnInit(): void {
     this.newsFeedService.getFeed().subscribe(feed => {
-      this.feed = feed
-    })
+      this.feed = feed;
+    });
 
   }
 
   postFeed() {
     const post = {idUser: 1, message: this.message};
     this.newsFeedService.postFeed(post).subscribe(data => {
-      alert("Post creado")
+      alert('Post creado');
       this.router.navigateByUrl('/home');
     },
     error => {
-      console.log(error)
+      console.log(error);
     });
   }
 

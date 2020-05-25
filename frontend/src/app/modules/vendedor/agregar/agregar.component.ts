@@ -18,7 +18,7 @@ export class AgregarComponent implements OnInit {
   }
   addProduct(){
     this.userService.addProduct(this.product).subscribe(data => {
-      alert("Producto agregado")
+      alert('Producto agregado');
       this.router.navigateByUrl('/home');
     },
     error => {

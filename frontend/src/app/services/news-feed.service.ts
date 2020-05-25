@@ -13,7 +13,7 @@ export class NewsFeedService {
     headers: new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
     })
-  }
+  };
   constructor(private router: Router, private http: HttpClient) { }
 
   getFeed(){

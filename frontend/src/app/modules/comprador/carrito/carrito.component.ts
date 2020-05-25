@@ -15,20 +15,19 @@ export class CarritoComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getCarritoUser().subscribe(carrito => {
       this.carrito = carrito[0];
-      for (let index = 0; index < this.carrito.products.length; index++) {
-        this.total += this.carrito.products[index].price;
-        console.log("Price "+ this.carrito.products[index].price);
-      }
+      this.carrito.products.forEach(element => {
+        this.total += element.price;
+      });
     });
 
   }
 
   eliminarDelCarrito(id) {
     this.userService.removeProductFromCarrito(id).subscribe(data => {
-      alert("Producto eliminado del carrito")
+      alert('Producto eliminado del carrito');
     },
     error => {
-      console.log(error)
+      console.log(error);
     });
   }
 

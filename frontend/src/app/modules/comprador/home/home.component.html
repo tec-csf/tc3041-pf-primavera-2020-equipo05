@@ -11,23 +11,20 @@
   <div class="row justify-content-md-center">
     <div class="col col-lg-4" *ngFor="let product of allProducts; let i = index">
       <div class="card">
-        <img src="{{ product.url }}" style="width: auto; height:200px" class="card-img-top" alt="..." />
+        <img src="{{ product.url }}" class="card-img-top img-responsive" width="300" height="200"  alt="..." />
         <div class="card-body">
           <h5 class="card-title">{{ product.name }}</h5>
           <p class="card-text">
             {{ product.description }}
           </p>
           <p class="card-text">${{ product.price }}.00.</p>
-          <p class="card-text">
-            <small class="text-muted">Last updated 3 mins ago</small>
-          </p>
+
           <button
             type="button"
             class="btn btn-outline-success btn-block"
-            routerLink="/comprar"
-
+            (click)="agregarAlCarrito(product.idProd)"
           >
-            Comprar
+            Agregar al carrito
           </button>
         </div>
       </div>

@@ -49,4 +49,13 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  agregarAlCarrito(id) {
+    this.userService.addProductToCarrito(id).subscribe(data => {
+      alert("Producto agregado al carrito")
+    },
+    error => {
+      console.log(error)
+    });
+  }
+
 }

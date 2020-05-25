@@ -14,8 +14,7 @@ const endpoint = 'http://localhost:8080/api/';
 })
 export class UserService {
   result: any;
-  users: any = data.users;
-  userProducts: any = this.users[0].products;
+  usr = 1;
   product: Product;
   carrito: any = (carritos as any).default;
   products: any;
@@ -30,34 +29,53 @@ export class UserService {
     return this.http.get(endpoint + "allProducts/" + i);
   }
 
-  login(user: any): Observable<any> {
+  login(user) {
     return this.http.post(endpoint + "login", user);
   }
 
+  getProductsUser(user) {
+    return this.http.get(endpoint + "productsUsers/" + user);
+  }
+
+  getCarritoUser() {
+    return this.http.get(endpoint + "carrito/" + this.usr);
+  }
+
+  getProduct(id) {
+    return this.http.get(endpoint + "products/" + id);
+  }
+
   addProduct(datos: any) {
-    this.products.push(datos);
-    //index 0 should be change to index of current suer
-    this.users[0].products.push(datos);
-    this.router.navigateByUrl('/home');
-  }
-  removeProduct(index: number){
-    this.users[0].products.splice(index, 1);
-  }
-  findProduct(index){
-    this.product = this.userProducts[index];
-    console.log(this.product);
+    delete datos.idProd;
+    var prod = Object.assign({idUser: this.usr}, datos)
+    return this.http.post(endpoint + "productsUsers", prod);
   }
 
-  updateProduct(id, name, description, price){
+  addProductToCarrito(idProd) {
+    console.log(this.usr)
+    console.log(idProd)
+    return this.http.post(endpoint + "carrito/" + this.usr, {idProd: idProd});
+  }
 
-    this.product = this.users[0].products.find(res => {
-    });
-    if (this.product){
-      this.product.name = name;
-      this.product.description = description;
-      this.product.price = price;
-    }
+  removeProductFromCarrito(idProd) {
+    console.log(this.usr)
+    console.log(idProd)
+    return this.http.request('delete', endpoint + "carrito/" + this.usr, { body: {idProd: idProd } });
+  }
 
-    this.router.navigateByUrl('/perfil');
+  removeProduct(id){
+    return this.http.delete(endpoint + "products/" + id);
+  }
+
+  setProduct(product){
+    this.product = product;
+  }
+
+  setUser(user) {
+    this.usr = user;
+  }
+
+  updateProduct(id, product){
+    return this.http.put(endpoint + "products/" + id, product);
   }
 }

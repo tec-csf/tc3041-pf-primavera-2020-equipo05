@@ -2,7 +2,7 @@
 <div class="container-fluid parallax-3">
   <div class="row align-items-center pt-4">
     <div class="col align-self-center perfil text-center">
-      <img src="{{ user.profile_pic }}" alt="" />
+      <img src="{{ user.user.profile_pic }}" alt="" />
       <hr />
       <p
         style="
@@ -11,7 +11,7 @@
           font-size: 32px;
         "
       >
-        {{ user.name }}
+        {{ user.user.name}} {{user.user.lname}}
       </p>
     </div>
   </div>
@@ -26,7 +26,7 @@
   <div class="row">
     <div
       class="col col-lg-4"
-      *ngFor="let product of user.products; let i = index" 
+      *ngFor="let product of products; let i = index"
     >
       <div class="card">
         <img src="{{ product.url }}" class="card-img-top" alt="..." />
@@ -34,9 +34,7 @@
           <h5 class="card-title" id="selected">{{ product.name }}</h5>
           <p class="card-text">{{ product.description }}</p>
           <p class="card-text">${{ product.price }}.00</p>
-          <p class="card-text">
-            <small class="text-muted">Last updated 3 mins ago</small>
-          </p>
+
           <button
             type="button"
             class="btn btn-outline-info btn-block"
@@ -71,21 +69,4 @@
     </button>
   </div>
 </div>
-<nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center pb-3">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
 <app-footer></app-footer>

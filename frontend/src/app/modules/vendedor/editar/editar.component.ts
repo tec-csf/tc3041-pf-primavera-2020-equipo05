@@ -13,7 +13,9 @@ export class EditarComponent implements OnInit {
   product: Product;
   name: string;
   description: string;
+  condition: string;
   price: number;
+  url: string;
 
   constructor(private userService: UserService, private router: Router) { }
 
@@ -21,11 +23,23 @@ export class EditarComponent implements OnInit {
   ngOnInit(): void {
     this.product = this.userService.product;
   }
-  updateProduct(name, description, price){
-    this.userService.updateProduct(this.product.id, this.product.name, this.product.description, this.product.price);
+
+  updateProduct(){
+    const newProduct = {
+      name: this.name,
+      condition: this.condition,
+      description: this.description,
+      price: this.price,
+      url: this.product.url};
+
+    this.userService.updateProduct(this.product.idProd, this.product).subscribe(data => {
+      alert("Producto editado")
+      this.router.navigateByUrl('/perfil');
+    },
+    error => {
+      console.log(error);
+    });
 
   }
-
-
 
 }

@@ -13,12 +13,13 @@ export class ComprarComponent implements OnInit {
   constructor(private router: Router,private userService: UserService) {  }
 
   ngOnInit(): void {
-    this.carrito = this.userService.carrito[1];
-    console.log(this.carrito.products[0].price);
-    for (let index = 0; index < this.carrito.products.length; index++) {
-      this.total += this.carrito.products[index].price;
-      console.log("Price "+ this.carrito.products[index].price);
-    }
+    this.userService.getCarritoUser().subscribe(carrito => {
+      this.carrito = carrito[0];
+      for (let index = 0; index < this.carrito.products.length; index++) {
+        this.total += this.carrito.products[index].price;
+        console.log("Price "+ this.carrito.products[index].price);
+      }
+    });
   }
 
   onSubmit() {

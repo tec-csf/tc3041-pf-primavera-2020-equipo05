@@ -12,7 +12,7 @@ const endpoint = 'http://localhost:8080/api/';
 })
 export class UserService {
   result: any;
-  usr = 1;
+  usr: any;
   product: Product;
   carrito: any = (carritos as any).default;
   products: any;
@@ -28,7 +28,12 @@ export class UserService {
   }
 
   login(user) {
+    this.http.post(endpoint + 'login', user).subscribe(data =>{
+      this.usr = data
+      console.log(this.usr.idUser);
+    });
     return this.http.post(endpoint + 'login', user);
+
   }
 
   getProductsUser(user) {

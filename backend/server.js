@@ -1,5 +1,6 @@
 var express = require("express"); //importar express
 var session = require('express-session');
+
 var redis = require("redis");
 var redisClient = redis.createClient();
 
@@ -35,9 +36,9 @@ router.use(function (req, res, next) {
   next();
 }); //funcion habilita el middleware
 
-/* redisClient.on('connect', function() {
+redisClient.on('connect', function() {
   console.log("Connected")
-}) */
+}) 
 
 /* router.get("/", function (req, res) {
   res.json({
@@ -45,14 +46,14 @@ router.use(function (req, res, next) {
   });
 }); */
 
-/* router.get('/', function(req, res) {
+router.get('/', function(req, res) {
   if (req.session.key) {
     res.status(200).send(req.session.key);
   }
   else {
     res.status(400).send({error: "No session started"})
   }
-}) */
+}) 
 
 // declarar los modelos
 var Product = require("./app/models/product");

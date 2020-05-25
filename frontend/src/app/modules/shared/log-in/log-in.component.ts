@@ -4,6 +4,7 @@ import {UserService} from '../../../services/user.service';
 
 
 
+
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
@@ -12,6 +13,7 @@ import {UserService} from '../../../services/user.service';
 export class LogInComponent implements OnInit {
   email: string;
   password: string;
+  idUser: any;
 
   constructor(private router: Router, private userService: UserService) { }
 
@@ -21,6 +23,9 @@ export class LogInComponent implements OnInit {
   onSubmit() {
     const user = {email: this.email, password: this.password};
     this.userService.login(user).subscribe(data => {
+      console.log(data);
+      this.idUser = data;
+      console.log(this.idUser.idUser)
       this.router.navigateByUrl('/home');
     },
     error => {

@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
       this.allProducts = [];
       this.products.products.forEach(element => {
         element.products.forEach(prd => {
-          console.log(prd);
           this.allProducts.push(prd);
         });
       });

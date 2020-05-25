@@ -13,10 +13,12 @@ export class PerfilComponent implements OnInit {
   user: any;
   products: any;
   product: Product;
+  idUser: any;
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    this.userService.getProductsUser(1).subscribe(productos => {
+    this.idUser = this.userService.usr.idUser;
+    this.userService.getProductsUser(this.idUser).subscribe(productos => {
       this.user = productos[0];
       this.userService.setUser(this.user.idUser);
       this.products = this.user.products;

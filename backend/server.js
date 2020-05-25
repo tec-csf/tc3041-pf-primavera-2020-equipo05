@@ -3,6 +3,7 @@ var session = require('express-session');
 
 var redis = require("redis");
 var redisClient = redis.createClient();
+const redisStore = require('connect-redis')(session);
 
 const cors = require('cors');
 var app = express();
@@ -38,7 +39,15 @@ router.use(function (req, res, next) {
 
 redisClient.on('connect', function() {
   console.log("Connected")
-}) 
+});
+app.use(session({
+  secret: 'ThisIsHowYouUseRedisSessionStorage',
+  name: '_redisPractice',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }, // Note that the cookie-parser module is no longer needed
+  store: new redisStore({ host: 'localhost', port: 6379, client: redisClient, ttl: 86400 }),
+}));
 
 /* router.get("/", function (req, res) {
   res.json({
@@ -85,6 +94,7 @@ router
           //redisClient.set(usuarioDB._id, usuarioDB.email, redis.p);
           //res.status(200).send({ message: "Login success", key: req.session.key});
           res.status(200).send({ message: "Login success", idUser: usuarioDB._id});
+
         }
       });
     }

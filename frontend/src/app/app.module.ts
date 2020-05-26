@@ -15,7 +15,6 @@ import { ComprarComponent } from './modules/comprador/comprar/comprar.component'
 import { LogInComponent } from './modules/shared/log-in/log-in.component';
 import { CrearCuentaComponent } from './modules/shared/crear-cuenta/crear-cuenta.component';
 import {CarritoComponent} from './modules/comprador/carrito/carrito.component';
-import { AdminModule } from './modules/admin/admin.module';
 import { MainComponentsModule } from './main-components/main-components.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { HttpClientModule} from '@angular/common/http';
@@ -39,7 +38,6 @@ import { HttpClientModule} from '@angular/common/http';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    AdminModule,
     MainComponentsModule,
     BrowserModule,
     FormsModule,

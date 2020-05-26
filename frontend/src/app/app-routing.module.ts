@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'editar', component: EditarComponent, data: {animation: 'isLeft'}  },
   { path: 'comprar', component: ComprarComponent, data: {animation: 'isRight'}  },
   { path: 'agregar', component: AgregarComponent, data: {animation: 'isLeft'}  },
-  {path: 'carrito', component: CarritoComponent}
+  { path: 'carrito', component: CarritoComponent}
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

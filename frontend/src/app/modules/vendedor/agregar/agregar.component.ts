@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./agregar.component.scss']
 })
 export class AgregarComponent implements OnInit {
-  product: Product = {idProd: 0, name: '', condition: '', description: '',  price: 0, url: 'https://www.eluniversal.com.mx/sites/default/files/2020/02/13/xbox-one-jordan.jpg'};
+  product: Product = {idProd: 0, name: '', condition: '', description: '',  price: 0, url: ''};
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {

@@ -23,17 +23,21 @@ export class UserService {
   };
   constructor(private router: Router, private http: HttpClient) { }
 
-  getProducts(i){
-    return this.http.get(endpoint + 'allProducts/' + i);
+  addUser(user: any) {
+    return this.http.post(endpoint + 'users', user);
   }
 
   login(user) {
-    this.http.post(endpoint + 'login', user).subscribe(data =>{
-      this.usr = data
+    this.http.post(endpoint + 'login', user).subscribe(data => {
+      this.usr = data;
       console.log(this.usr.idUser);
     });
     return this.http.post(endpoint + 'login', user);
 
+  }
+
+  getProducts(i){
+    return this.http.get(endpoint + 'allProducts/' + i);
   }
 
   getProductsUser(user) {

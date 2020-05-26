@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {UserService} from '../../../services/user.service';
 
-
-
-
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
@@ -25,7 +22,7 @@ export class LogInComponent implements OnInit {
     this.userService.login(user).subscribe(data => {
       console.log(data);
       this.idUser = data;
-      console.log(this.idUser.idUser)
+      console.log(this.idUser.idUser);
       this.router.navigateByUrl('/home');
     },
     error => {

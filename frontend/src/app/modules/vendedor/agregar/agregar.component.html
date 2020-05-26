@@ -55,8 +55,14 @@
                 ></textarea>
               </div>
               <div class="form-group">
-                <label >Agregar imagen:</label>
-                <input type="file" id="img" name="img" accept="image/*" />
+                <label >URL de imagen:</label>
+                <input
+                  [(ngModel)]="product.url"
+                  type="text"
+                  class="form-control"
+                  name="url"
+                  required
+                />
               </div>
               <button type="submit" class="btn btn-primary btn-block" >
                 Agregar artículo

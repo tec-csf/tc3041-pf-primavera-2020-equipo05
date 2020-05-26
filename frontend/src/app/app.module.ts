@@ -14,7 +14,8 @@ import { EditarComponent } from './modules/vendedor/editar/editar.component';
 import { ComprarComponent } from './modules/comprador/comprar/comprar.component';
 import { LogInComponent } from './modules/shared/log-in/log-in.component';
 import { CrearCuentaComponent } from './modules/shared/crear-cuenta/crear-cuenta.component';
-import {CarritoComponent} from './modules/comprador/carrito/carrito.component';
+import { CarritoComponent} from './modules/comprador/carrito/carrito.component';
+import { ValidarCompraComponent} from './modules/comprador/validar-compra/validar-compra.component';
 import { MainComponentsModule } from './main-components/main-components.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { HttpClientModule} from '@angular/common/http';
@@ -32,6 +33,7 @@ import { HttpClientModule} from '@angular/common/http';
     LogInComponent,
     CrearCuentaComponent,
     CarritoComponent,
+    ValidarCompraComponent
 
   ],
   imports: [

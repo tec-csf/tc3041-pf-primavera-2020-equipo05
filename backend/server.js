@@ -519,10 +519,10 @@ router
         if (err) {
           res.send(err);
         }
-        console.log(producto[0].products)
+       // console.log(producto[0].products)
         product = producto[0].products
       })
-
+      console.log(product);
       Carrito.findOneAndUpdate({idUser: req.params.id_user}, {$push: {products: product}}, async function (error, result) {
         if (error) {
           res.status(404).send({ message: "not found" });
@@ -540,8 +540,11 @@ router
                 if (err.name == "ValidationError")
                   res.status(400).send({ error: err.message });
               }
+              else{
+                res.json({ mensaje: "Producto agregado al carrito" });
+
+              }
             });
-            res.json({ mensaje: "Producto agregado al carrito" });
           } catch (error) {
             res.status(500).send({ error: error });
           }
@@ -601,7 +604,7 @@ router
         return;
       }
       res.status(200).send(compra);
-    });
+    }).sort('-_id');
   })
   .post(async function (req, res) {
       var productos;
@@ -614,9 +617,11 @@ router
       })
 
       var compra = new Compra();
+      console.log(productos)
       compra.idUser = req.params.id_user;
       compra.products = productos;
-      compra.validation = "Listo";
+      compra.address = req.body.address;
+      //compra.validation = "Listo";
 
       try {
         await compra.save(function (err) {
@@ -639,6 +644,43 @@ router
       } catch (error) {
         res.status(500).send({ error: error });
       }  
+    
+  });
+
+router
+  .route("/validarCompra/:id_user")
+  .get(function (req, res) {
+    Compra.find({idUser: req.params.id_user}, function (error, compra) {
+      if (error) {
+        res.status(404).send({ message: "not found" });
+        return;
+      }
+      if (compra == null) {
+        res.status(404).send({ compra: "not found" });
+        return;
+      }
+      res.status(200).send(compra);
+    }).sort('-_id');
+  })
+  .put(function (req, res) {
+    if (req.body.validation) {
+      Compra.findOne({idUser: req.params.id_user}, function (err, compra) {
+        if (err) {
+          res.send(err);
+        }
+        compra.validation = req.body.validation;
+
+        compra.save(function (err) {
+          if (err) {
+            res.send(err);
+          }
+          res.json({ message: "Validacion de compra agregada" });
+        });
+      }).sort('-_id');
+    }
+    else {
+      res.status(400).send({error: "missing fields"})
+    }
     
   });
 

@@ -48,6 +48,14 @@ export class UserService {
     return this.http.get(endpoint + 'carrito/' + this.usr);
   }
 
+  getCompraUser() {
+    return this.http.get(endpoint + 'compra/' + this.usr);
+  }
+
+  validarCompra(validacion: any){
+    return this.http.put(endpoint + 'validarCompra/' + this.usr, {validation: validacion});
+  }
+
   getProduct(id) {
     return this.http.get(endpoint + 'products/' + id);
   }
@@ -59,15 +67,19 @@ export class UserService {
   }
 
   addProductToCarrito(id) {
-    console.log(this.usr);
+    console.log('usr' + this.usr.idUser);
     console.log(id);
-    return this.http.post(endpoint + 'carrito/' + this.usr, {idProd: id});
+    return this.http.post(endpoint + 'carrito/' + 1, {idProd: id});
+  }
+
+  buyProduct(datos: any) {
+    return this.http.post(endpoint + 'compra/' + this.usr, {address: datos});
   }
 
   removeProductFromCarrito(id) {
     console.log(this.usr);
     console.log(id);
-    return this.http.request('delete', endpoint + 'carrito/' + this.usr, { body: {idProd: id } });
+    return this.http.request('delete', endpoint + 'carrito/' + this.usr.idUser, { body: {idProd: id } });
   }
 
   removeProduct(id){

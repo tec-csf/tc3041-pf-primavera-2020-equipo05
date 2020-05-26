@@ -34,13 +34,6 @@ export class CrearCuentaComponent implements OnInit {
       alert('Contraseñas no son iguales');
 
     }
-    /* this.userService.addUser(this.user).subscribe(data => {
-      alert('Producto agregado');
-      this.router.navigateByUrl('/log-in');
-    },
-    error => {
-      console.log(error);
-    }); */
 
   }
 

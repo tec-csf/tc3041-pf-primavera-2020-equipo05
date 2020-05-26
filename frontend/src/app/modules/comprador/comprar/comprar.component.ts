@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {UserService} from '../../../services/user.service';
+import {Address } from 'src/app/interfaces/address';
 
 @Component({
   selector: 'app-comprar',
@@ -10,7 +11,9 @@ import {UserService} from '../../../services/user.service';
 export class ComprarComponent implements OnInit {
   carrito: any;
   total = 0;
-  constructor(private router: Router, private userService: UserService) {  }
+
+  address: Address = {street: '', country: '', state: '', zip: 12345};
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.userService.getCarritoUser().subscribe(carrito => {
@@ -18,6 +21,16 @@ export class ComprarComponent implements OnInit {
       this.carrito.products.forEach(element => {
         this.total += element.price;
       });
+    });
+  }
+
+  buyItems(){
+    this.userService.buyProduct(this.address).subscribe(data => {
+      alert('Compra exitosa');
+      this.router.navigateByUrl('/validar-compra');
+    },
+    error => {
+      console.log(error);
     });
   }
 

@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http'
 import { map, catchError, tap} from 'rxjs/operators';
 import { Observable } from 'rxjs';
 const endpoint = 'http://localhost:8080/api/';
+let userDB;
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class UserService {
   };
   constructor(private router: Router, private http: HttpClient) { }
 
+
   addUser(user: any) {
     return this.http.post(endpoint + 'users', user);
   }
@@ -30,6 +32,7 @@ export class UserService {
   login(user) {
     this.http.post(endpoint + 'login', user).subscribe(data => {
       this.usr = data;
+      userDB = this.usr.idUser;
       console.log(this.usr.idUser);
     });
     return this.http.post(endpoint + 'login', user);
@@ -45,15 +48,18 @@ export class UserService {
   }
 
   getCarritoUser() {
-    return this.http.get(endpoint + 'carrito/' + this.usr);
+    console.log('userDB: ' + userDB);
+    return this.http.get(endpoint + 'carrito/' + userDB);
   }
 
   getCompraUser() {
-    return this.http.get(endpoint + 'compra/' + this.usr);
+    console.log('userDB: ' + userDB);
+    return this.http.get(endpoint + 'compra/' + 1);
   }
 
-  validarCompra(validacion: any){
-    return this.http.put(endpoint + 'validarCompra/' + this.usr, {validation: validacion});
+  validarCompra(validacion: any, comentario: any){
+    console.log('userDB: ' + userDB);
+    return this.http.put(endpoint + 'validarCompra/' + 1, {validation: validacion, comment: comentario});
   }
 
   getProduct(id) {
@@ -62,7 +68,8 @@ export class UserService {
 
   addProduct(datos: any) {
     delete datos.idProd;
-    const prod = Object.assign({idUser: this.usr}, datos);
+    console.log('userDB: ' + userDB);
+    const prod = Object.assign({idUser: userDB}, datos);
     return this.http.post(endpoint + 'productsUsers', prod);
   }
 
@@ -73,13 +80,14 @@ export class UserService {
   }
 
   buyProduct(datos: any) {
-    return this.http.post(endpoint + 'compra/' + this.usr, {address: datos});
+    return this.http.post(endpoint + 'compra/' + 1, {address: datos});
   }
 
   removeProductFromCarrito(id) {
     console.log(this.usr);
     console.log(id);
-    return this.http.request('delete', endpoint + 'carrito/' + this.usr.idUser, { body: {idProd: id } });
+    console.log('userDB: ' + userDB);
+    return this.http.request('delete', endpoint + 'carrito/' + userDB, { body: {idProd: id } });
   }
 
   removeProduct(id){
@@ -88,6 +96,11 @@ export class UserService {
 
   setProduct(product){
     this.product = product;
+  }
+
+  getUser() {
+    console.log('userDB: ' + userDB);
+    return userDB;
   }
 
   setUser(user) {

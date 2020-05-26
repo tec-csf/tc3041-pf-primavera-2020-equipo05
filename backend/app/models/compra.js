@@ -5,7 +5,8 @@ var ComprasSchema = new Schema({
     idUser: Number,
     products: Array,
     address: Array,
-    validation: String
+    validation: Boolean,
+    comment: String
 }, { versionKey: false });
 
 module.exports = mongoose.model("Compra", ComprasSchema, 'compras');

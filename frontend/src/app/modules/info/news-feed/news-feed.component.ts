@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {NewsFeedService} from '../../../services/news-feed.service';
+import {UserService} from '../../../services/user.service';
 
 @Component({
   selector: 'app-news-feed',
@@ -11,14 +12,19 @@ export class NewsFeedComponent implements OnInit {
   feed: any;
   message: string;
 
-  constructor(private router: Router, private newsFeedService: NewsFeedService) {
+  constructor(private router: Router, private userService: UserService, private newsFeedService: NewsFeedService) {
 
   }
 
   ngOnInit(): void {
-    this.newsFeedService.getFeed().subscribe(feed => {
-      this.feed = feed;
-    });
+    if (this.userService.getUser() == null) {
+      this.router.navigateByUrl('/log-in');
+    }
+    else {
+      this.newsFeedService.getFeed().subscribe(feed => {
+        this.feed = feed;
+      });
+    }
 
   }
 

@@ -42,19 +42,35 @@
         </div>
       </div>
     </div>
+
       <div class="row justify-content-center pb-3">
         <div class="col-md-8">
          <form (submit)="validarCompra()" ngNativeValidate>
           <div class="form-group">
-            <h4>Valídanos tu compra:</h4>
+            <h3>Valídanos tu compra:</h3>
+            <h5>¿Llegó bien tu compra?</h5>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="exampleRadios" id="validation" value="si" checked>
+              <label class="form-check-label" for="exampleRadios1">
+                Sí
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="no">
+              <label class="form-check-label" for="exampleRadios2">
+                No
+              </label>
+            </div>
+            <br>
+            <h5>Déjanos un comentario adicional</h5>
              <textarea
               class="form-control"
               placeholder="¿En qué estas pensando?"
               id="exampleFormControlTextarea1"
               rows="3"
-              [(ngModel)]= "validation"
-              name = "validation"
-              required></textarea>
+              [(ngModel)]= "comment"
+              name = "comment"
+              ></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Enviar</button>
         </form>

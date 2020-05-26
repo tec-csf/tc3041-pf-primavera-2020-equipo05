@@ -17,12 +17,17 @@ export class PerfilComponent implements OnInit {
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    this.idUser = this.userService.usr.idUser;
-    this.userService.getProductsUser(this.idUser).subscribe(productos => {
-      this.user = productos[0];
-      this.userService.setUser(this.user.idUser);
-      this.products = this.user.products;
-    });
+    if (this.userService.getUser() == null) {
+      this.router.navigateByUrl('/log-in');
+    }
+    else {
+      this.idUser = this.userService.getUser();
+      this.userService.getProductsUser(this.idUser).subscribe(productos => {
+        this.user = productos[0];
+        this.userService.setUser(this.user.idUser);
+        this.products = this.user.products;
+      });
+  }
   }
 
   findElement(index){

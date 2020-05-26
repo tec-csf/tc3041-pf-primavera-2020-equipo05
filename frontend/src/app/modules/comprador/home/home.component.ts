@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,23 +13,28 @@ export class HomeComponent implements OnInit {
   currentPage: number;
   pages: number;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,  private router: Router) {
 
   }
 
   ngOnInit(): void {
-    this.userService.getProducts(1).subscribe(productos => {
-      this.products = productos;
-      this.currentPage = this.products.currentPage;
-      this.pages = this.products.pages;
-      console.log(this.products);
-      this.allProducts = [];
-      this.products.products.forEach(element => {
-        element.products.forEach(prd => {
-          this.allProducts.push(prd);
+    if (this.userService.getUser() == null) {
+      this.router.navigateByUrl('/log-in');
+    }
+    else {
+      this.userService.getProducts(1).subscribe(productos => {
+        this.products = productos;
+        this.currentPage = this.products.currentPage;
+        this.pages = this.products.pages;
+        console.log(this.products);
+        this.allProducts = [];
+        this.products.products.forEach(element => {
+          element.products.forEach(prd => {
+            this.allProducts.push(prd);
+          });
         });
       });
-    });
+    }
 
   }
 

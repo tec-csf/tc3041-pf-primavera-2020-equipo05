@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class ValidarCompraComponent implements OnInit {
   compra: any;
-  validation: string;
+  validation: boolean;
+  comment: string;
 
   constructor(private userService: UserService, private router: Router) { }
 
@@ -21,7 +22,8 @@ export class ValidarCompraComponent implements OnInit {
   }
 
   validarCompra() {
-    this.userService.validarCompra(this.validation).subscribe(data => {
+    this.validation = (document.getElementById('validation') as HTMLInputElement).checked;
+    this.userService.validarCompra(this.validation, this.comment).subscribe(data => {
       alert('Gracias por tu validación');
       this.router.navigateByUrl('/home');
     },

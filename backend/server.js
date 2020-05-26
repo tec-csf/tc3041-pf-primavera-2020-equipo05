@@ -110,8 +110,8 @@ router
           return;
         }
         else {
-          req.session.key=req.body.key;
-          client.setex(usuarioDB._id,120, usuarioDB.email);
+          req.session.key={_id: usuarioDB._id, email: usuarioDB.email};
+          //client.setex(usuarioDB._id,120, usuarioDB.email);
           //res.status(200).send({ message: "Login success", key: req.session.key});
           res.status(200).send({ message: "Login success", idUser: usuarioDB._id});
 
@@ -608,20 +608,18 @@ router
   })
   .post(async function (req, res) {
       var productos;
+      var compra = new Compra();
       await Carrito.find({idUser: req.params.id_user}, function (err, carrito) {
         if (err) {
           res.send(err);
         }
-        console.log(carrito[0].products)
-        productos = carrito[0].products
+        console.log(carrito)
+        productos = carrito[0].products;
+       
+        compra.products = productos;
       })
-
-      var compra = new Compra();
-      console.log(productos)
       compra.idUser = req.params.id_user;
-      compra.products = productos;
       compra.address = req.body.address;
-      //compra.validation = "Listo";
 
       try {
         await compra.save(function (err) {
@@ -649,26 +647,16 @@ router
 
 router
   .route("/validarCompra/:id_user")
-  .get(function (req, res) {
-    Compra.find({idUser: req.params.id_user}, function (error, compra) {
-      if (error) {
-        res.status(404).send({ message: "not found" });
-        return;
-      }
-      if (compra == null) {
-        res.status(404).send({ compra: "not found" });
-        return;
-      }
-      res.status(200).send(compra);
-    }).sort('-_id');
-  })
   .put(function (req, res) {
-    if (req.body.validation) {
+    //if (req.body.validation) {
       Compra.findOne({idUser: req.params.id_user}, function (err, compra) {
         if (err) {
           res.send(err);
         }
         compra.validation = req.body.validation;
+        if (req.body.comment != null) {
+          compra.comment = req.body.comment;
+        }
 
         compra.save(function (err) {
           if (err) {
@@ -677,10 +665,10 @@ router
           res.json({ message: "Validacion de compra agregada" });
         });
       }).sort('-_id');
-    }
-    else {
+    //}
+   /*  else {
       res.status(400).send({error: "missing fields"})
-    }
+    } */
     
   });
 

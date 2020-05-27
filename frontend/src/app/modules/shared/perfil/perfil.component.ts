@@ -21,10 +21,8 @@ export class PerfilComponent implements OnInit {
       this.router.navigateByUrl('/log-in');
     }
     else {
-      this.idUser = this.userService.getUser();
-      this.userService.getProductsUser(this.idUser).subscribe(productos => {
+      this.userService.getProductsUser().subscribe(productos => {
         this.user = productos[0];
-        this.userService.setUser(this.user.idUser);
         this.products = this.user.products;
       });
   }

@@ -16,12 +16,18 @@ export class ComprarComponent implements OnInit {
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    this.userService.getCarritoUser().subscribe(carrito => {
-      this.carrito = carrito[0];
-      this.carrito.products.forEach(element => {
-        this.total += element.price;
+    if (this.userService.getUser() == null) {
+      this.router.navigateByUrl('/log-in');
+    }
+    else{
+      this.userService.getCarritoUser().subscribe(carrito => {
+        this.carrito = carrito[0];
+        this.carrito.products.forEach(element => {
+          this.total += element.price;
+        });
       });
-    });
+    }
+
   }
 
   buyItems(){

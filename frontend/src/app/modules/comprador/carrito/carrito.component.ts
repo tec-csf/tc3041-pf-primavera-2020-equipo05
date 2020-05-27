@@ -19,9 +19,16 @@ export class CarritoComponent implements OnInit {
     else {
       this.userService.getCarritoUser().subscribe(carrito => {
         this.carrito = carrito[0];
-        this.carrito.products.forEach(element => {
-          this.total += element.price;
-        });
+        if(this.carrito==null){
+          alert("Carrito vacio");
+          this.router.navigateByUrl('/home');
+        }
+        else{
+          this.carrito.products.forEach(element => {
+            this.total += element.price;
+          });
+        }
+
       });
   }
 

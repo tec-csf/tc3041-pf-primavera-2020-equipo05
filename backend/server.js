@@ -112,8 +112,8 @@ router
         else {
           req.session.key={_id: usuarioDB._id, email: usuarioDB.email};
           //client.setex(usuarioDB._id,120, usuarioDB.email);
-          //res.status(200).send({ message: "Login success", key: req.session.key});
-          res.status(200).send({ message: "Login success", idUser: usuarioDB._id});
+          res.status(200).send({ message: "Login success", key: req.session.key});
+          //res.status(200).send({ message: "Login success", idUser: usuarioDB._id});
 
         }
       });
@@ -508,13 +508,14 @@ router
     });
   })
   .post(async function (req, res) {
+    console.log(req.body);
     if (req.body.idProd) {
       var product;
       await productUser.aggregate([{ $unwind: '$products' }, { $match: {'products.idProd': parseInt(req.body.idProd)}},{$project: {'products':1, _id:0}}], function (err, producto) {
         if (err) {
           res.send(err);
         }
-       // console.log(producto[0].products)
+       //console.log(producto[0].products);
         product = producto[0].products
       })
       console.log(product);

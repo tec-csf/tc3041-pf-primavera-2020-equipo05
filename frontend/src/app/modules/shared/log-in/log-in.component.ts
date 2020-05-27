@@ -19,15 +19,8 @@ export class LogInComponent implements OnInit {
 
   onSubmit() {
     const user = {email: this.email, password: this.password};
-    this.userService.login(user).subscribe(data => {
-      console.log(data);
-      this.idUser = data;
-      console.log(this.idUser.idUser);
-      this.router.navigateByUrl('/home');
-    },
-    error => {
-      alert(error.error.message);
-    });
+    this.userService.login(user);
+    
   }
 
 }

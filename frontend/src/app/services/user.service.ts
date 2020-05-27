@@ -36,7 +36,11 @@ export class UserService {
       console.log(this.usr.idUser);
     });
     return this.http.post(endpoint + 'login', user);
+  }
 
+  logout() {
+    userDB = '';
+    return this.http.get(endpoint + 'logout');
   }
 
   getProducts(i){

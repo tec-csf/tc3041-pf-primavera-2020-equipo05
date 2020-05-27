@@ -126,14 +126,9 @@ router
 router
   .route("/logout")
   .get(function (req, res) {
-    if (req.session.key) {
-      req.session.destroy();
-      res.status(200).send({ message: "Logout success"});
-    }
+    req.session.destroy();
+    res.status(200).send({ message: "Logout success"});
     
-    else {
-      res.status(400).send({ message: "User not signed in"});
-    }
   });
 
 router

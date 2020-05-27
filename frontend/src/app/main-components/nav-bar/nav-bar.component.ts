@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {UserService} from '../../services/user.service';
 
 
 @Component({
@@ -9,9 +10,19 @@ import { Router } from '@angular/router';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
+  }
+
+  logOut() {
+    this.userService.logout().subscribe(data => {
+      console.log(data);
+      this.router.navigateByUrl('/log-in');
+    },
+    error => {
+      console.log(error);
+    });
   }
 
   isHomeView() {

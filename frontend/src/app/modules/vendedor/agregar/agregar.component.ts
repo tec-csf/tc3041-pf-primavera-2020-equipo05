@@ -14,7 +14,12 @@ export class AgregarComponent implements OnInit {
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    console.log(this.product);
+    if (this.userService.getUser() == null) {
+      this.router.navigateByUrl('/log-in');
+    }
+    else{
+      console.log(this.product);
+    }
   }
   addProduct(){
     this.userService.addProduct(this.product).subscribe(data => {

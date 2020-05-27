@@ -21,7 +21,12 @@ export class EditarComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.product = this.userService.product;
+    if (this.userService.getUser() == null) {
+      this.router.navigateByUrl('/log-in');
+    }
+    else{
+      this.product = this.userService.product;
+    }
   }
 
   updateProduct(){

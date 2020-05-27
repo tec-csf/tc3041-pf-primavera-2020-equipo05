@@ -15,9 +15,14 @@ export class ValidarCompraComponent implements OnInit {
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    this.userService.getCompraUser().subscribe(compra => {
-      this.compra = compra[0];
-    });
+    if (this.userService.getUser() == null) {
+      this.router.navigateByUrl('/log-in');
+    }
+    else{
+      this.userService.getCompraUser().subscribe(compra => {
+        this.compra = compra[0];
+      });
+    }
 
   }
 

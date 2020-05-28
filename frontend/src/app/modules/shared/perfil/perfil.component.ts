@@ -23,7 +23,7 @@ export class PerfilComponent implements OnInit {
     }
     else {
       this.userService.getProductsUser().subscribe(productos => {
-        this.user = productos[0];
+        this.user = productos;
         this.products = this.user.products;
       });
   }

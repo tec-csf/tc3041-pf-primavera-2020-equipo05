@@ -299,15 +299,33 @@ router
         'user.profile_pic': 1}
       }
     ],function (error, result) {
+      console.log("result" + result)
       if (error) {
         res.status(404).send({ message: "not found" });
         return;
       }
-      if (result == null) {
+      else if (result == null) {
         res.status(404).send({ result: "not found" });
         return;
       }
-      res.status(200).send(result);
+      else if (result == "") {
+        User.findById(req.params.id_user, function (error, usuario) {
+          if (error) {
+            res.status(404).send({ message: "not found" });
+            return;
+          }
+          else if (usuario == null) {
+            res.status(404).send({ usuario: "not found" });
+            return;
+          }
+          else {
+            res.status(200).send({user: usuario});
+          }
+        }).select('idUser name lname profile_pic');
+      }
+      else {
+        res.status(200).send(result[0]);
+      }
     });
   })
 
@@ -639,7 +657,7 @@ router
         res.status(404).send({ message: "not found" });
         return;
       }
-      if (compra == null) {
+      else if (compra == null) {
         res.status(404).send({ compra: "not found" });
         return;
       }
@@ -649,42 +667,44 @@ router
   .post(async function (req, res) {
       var productos;
       var compra = new Compra();
-      await Carrito.find({idUser: req.params.id_user}, function (err, carrito) {
+      await Carrito.find({idUser: req.params.id_user}, async function (err, carrito) {
         if (err) {
           res.send(err);
           return;
         }
+        else {
         console.log(carrito)
         productos = carrito[0].products;
        
         compra.products = productos;
-      })
-      compra.idUser = req.params.id_user;
-      compra.address = req.body.address;
+       
+        compra.idUser = req.params.id_user;
+        compra.address = req.body.address;
 
-      try {
-        await compra.save(function (err) {
-          if (err) {
-            console.log(err);
-            if (err.name == "ValidationError")
-              res.status(400).send({ error: err.message });
-          }
-          else {
-            Carrito.remove({idUser: req.params.id_user},
-              function (err) {
-                if (err) {
-                  res.send(err);
-                  return;
+        try {
+          await compra.save(function (err) {
+            if (err) {
+              console.log(err);
+              if (err.name == "ValidationError")
+                res.status(400).send({ error: err.message });
+            }
+            else {
+              Carrito.remove({idUser: req.params.id_user},
+                function (err) {
+                  if (err) {
+                    res.send(err);
+                    return;
+                  }
+                  res.json({ mensaje: "Compra creada con exito" });
                 }
-                res.json({ mensaje: "Compra creada con exito" });
-              }
-            );
-          }
-        });
-      } catch (error) {
-        res.status(500).send({ error: error });
-      }  
-    
+              );
+            }
+          });
+        } catch (error) {
+          res.status(500).send({ error: error });
+        }  
+      }
+    })
   });
 
 router

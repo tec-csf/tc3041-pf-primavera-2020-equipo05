@@ -21,7 +21,6 @@ app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
 app.get('/',function(req,res){  
   // create new session object.
   if(req.session.key) {
@@ -100,12 +99,12 @@ router
           res.status(500).send(error);
           return;
         }
-        if (!usuarioDB) {
+        else if (!usuarioDB) {
           res.status(400).send({ message: "Usuario o password incorrectos" });
           return;
         }
 
-        if (!passwordHash.verify(req.body.password, usuarioDB.password)) {
+        else if (!passwordHash.verify(req.body.password, usuarioDB.password)) {
           res.status(400).send({ message: "Usuario o password incorrectos" });
           return;
         }
@@ -140,9 +139,12 @@ router
       await productUser.aggregate([{ $unwind: '$products' }, { $sort: {'products.idProd': -1}},{$limit: 1}], function (err, idProduct) {
         if (err) {
           res.send(err);
+          return;
         }
-        console.log(idProduct[0].products.idProd)
-        idProd = parseInt(idProduct[0].products.idProd)+1;
+        else {
+          console.log(idProduct[0].products.idProd)
+          idProd = parseInt(idProduct[0].products.idProd)+1;
+        }
       })
 
       var producto = {
@@ -182,6 +184,7 @@ router
           res.json({ mensaje: "Producto agregado" })
         }
       });
+      
     //}
     //else {
       //res.status(400).send({error: "missing fields"})
@@ -324,6 +327,7 @@ router
             console.log(err);
             if (err.name == "ValidationError")
               res.status(400).send({ error: err.message });
+              return;
           }
         });
         res.json({ mensaje: "Post creado" });
@@ -371,46 +375,61 @@ router
     if (req.body.profile_pic && req.body.name && req.body.lname && req.body.dBirth && req.body.country && req.body.email && req.body.password) {
       var idUser;
       var user = new User();
-      await User.findOne(function (err, result) {
+      await User.findOne(async function (err, result) {
         if (err) {
           res.send(err);
+          return;
         }
-        idUser = parseInt(result._id)+1;
-        user._id = idUser;
-      }).sort('-_id')
+        else {
+          idUser = parseInt(result._id)+1;
+          user._id = idUser;
 
-      user.profile_pic = req.body.profile_pic;
-      user.name = req.body.name;
-      user.lname = req.body.lname;
-      user.dBirth = req.body.dBirth
-      user.country = req.body.country;
-      user.email = req.body.email;
-      user.password =  passwordHash.generate(req.body.password);
-      
-      try {
-        await user.save(function (err) {
-          if (err) {
-            console.log(err);
-            if (err.name == "ValidationError")
-              res.status(400).send({ error: err.message });
-          }
-          else{
-            res.json({ mensaje: "Usuario creado" });
-          }
-        });
-        
-      } catch (error) {
-        res.status(500).send({ error: error });
-      }  
+          await User.find({email: req.body.email}, async function (err, result) {
+            if (result) {
+              res.status(400).send({error: "Email already exists"})
+            }
+            else if (err) {
+              res.send(err);
+            }
+            else {
+              user.profile_pic = req.body.profile_pic;
+              user.name = req.body.name;
+              user.lname = req.body.lname;
+              user.dBirth = req.body.dBirth
+              user.country = req.body.country;
+              user.email = req.body.email;
+              user.password =  passwordHash.generate(req.body.password);
+              
+              try {
+                await user.save(function (err) {
+                  if (err) {
+                    console.log(err);
+                    if (err.name == "ValidationError")
+                      res.status(400).send({ error: err.message });
+                  }
+                  else{
+                    res.json({ mensaje: "Usuario creado" });
+                  }
+                });
+                
+              } catch (error) {
+                res.status(500).send({ error: error });
+              }
+            }
+          })
+        }
+      }).sort('-_id')
     }
     else {
       res.status(400).send({error: "missing fields"})
     }
+  
   })
   .get(function (req, res) {
     User.find({ }, function (err, usuarios) {
       if (err) {
         res.send(err);
+        return;
       }
       res.status(200).send(usuarios);
     }).select('-password').sort({ _id: 1 })
@@ -436,6 +455,7 @@ router
       User.findById(req.params.id_user, function (err, user) {
         if (err) {
           res.send(err);
+          return;
         }
         user.profile_pic = req.body.profile_pic;
         user.name = req.body.name;
@@ -447,6 +467,7 @@ router
         user.save(function (err) {
           if (err) {
             res.send(err);
+            return;
           }
           res.json({ message: "usuario actualizado" });
         });
@@ -469,6 +490,7 @@ router
             function (err) {
               if (err) {
                 res.send(err);
+                return;
               }
               res.json({ mensaje: "Usuario borrado con exito" });
             }
@@ -487,6 +509,7 @@ router
     Carrito.find({ }, function (err, carrito) {
       if (err) {
         res.send(err);
+        return;
       }
       res.status(200).send(carrito);
     })
@@ -509,47 +532,67 @@ router
   })
   .post(async function (req, res) {
     console.log(req.body);
-    if (req.body.idProd) {
+    if (req.body) {
       var product;
-      await productUser.aggregate([{ $unwind: '$products' }, { $match: {'products.idProd': parseInt(req.body.idProd)}},{$project: {'products':1, _id:0}}], function (err, producto) {
+      Carrito.find({idUser: req.params.id_user, "products.idProd": req.body.idProd}, async function (err, producto) {
+        console.log(producto)
         if (err) {
           res.send(err);
-        }
-       //console.log(producto[0].products);
-        product = producto[0].products
-      })
-      console.log(product);
-      Carrito.findOneAndUpdate({idUser: req.params.id_user}, {$push: {products: product}}, async function (error, result) {
-        if (error) {
-          res.status(404).send({ message: "not found" });
           return;
         }
-        if (result == null) {
-          var carrito = new Carrito();
-
-          carrito.idUser = req.params.id_user;
-          carrito.products = product;
-          try {
-            await carrito.save(function (err) {
-              if (err) {
-                console.log(err);
-                if (err.name == "ValidationError")
-                  res.status(400).send({ error: err.message });
-              }
-              else{
-                res.json({ mensaje: "Producto agregado al carrito" });
-
-              }
-            });
-          } catch (error) {
-            res.status(500).send({ error: error });
-          }
+        else if (producto != "") {
+          res.status(400).send({message: "Producto ya en el carrito"})
+          return;
         }
         else {
-          res.json({ mensaje: "Producto agregado al carrito" })
+          await productUser.aggregate([{ $unwind: '$products' }, { $match: {'products.idProd': parseInt(req.body.idProd)}}, {'$limit': 1}, {$project: {'products':1, _id:0}}], function (err, producto) {
+            if (err) {
+              res.send(err);
+              return;
+            }
+            else {
+              console.log("producto[0].products" + producto[0].products);
+              product = producto[0].products
+            
+              console.log("product: " + product);
+
+              Carrito.findOneAndUpdate({idUser: req.params.id_user}, {$push: {products: product}}, async function (error, result) {
+                if (error) {
+                  res.status(404).send({ message: "not found" });
+                  return;
+                }
+                if (result == null) {
+                  var carrito = new Carrito();
+
+                  carrito.idUser = req.params.id_user;
+                  carrito.products = product;
+                  try {
+                    await carrito.save(function (err) {
+                      if (err) {
+                        console.log(err);
+                        if (err.name == "ValidationError")
+                          res.status(400).send({ error: err.message });
+                      }
+                      else{
+                        res.json({ mensaje: "Producto agregado al carrito" });
+
+                      }
+                    });
+                  } catch (error) {
+                    res.status(500).send({ error: error });
+                  }
+                }
+                else {
+                  res.json({ mensaje: "Producto agregado al carrito" })
+                }
+              });
+            }
+              
+          })
         }
       });
     }
+
     else {
       res.status(400).send({error: "missing fields"})
     }
@@ -558,7 +601,7 @@ router
   .delete(function (req, res) {
     var idProd = parseInt(req.body.idProd);
 
-    Carrito.updateOne({idUser: req.params.id_user}, {$pull: {products: {"idProd": idProd}}}, function (error, result) {
+    Carrito.updateOne({idUser: req.params.id_user}, {$pull: {products: {"idProd": idProd}}}, { "multi": false }, function (error, result) {
       console.log(result)
       if (error) {
         console.log(error)
@@ -582,6 +625,7 @@ router
     Compra.find({ }, function (err, carrito) {
       if (err) {
         res.send(err);
+        return;
       }
       res.status(200).send(carrito);
     })
@@ -608,6 +652,7 @@ router
       await Carrito.find({idUser: req.params.id_user}, function (err, carrito) {
         if (err) {
           res.send(err);
+          return;
         }
         console.log(carrito)
         productos = carrito[0].products;
@@ -629,6 +674,7 @@ router
               function (err) {
                 if (err) {
                   res.send(err);
+                  return;
                 }
                 res.json({ mensaje: "Compra creada con exito" });
               }
@@ -648,6 +694,7 @@ router
       Compra.findOne({idUser: req.params.id_user}, function (err, compra) {
         if (err) {
           res.send(err);
+          return;
         }
         compra.validation = req.body.validation;
         if (req.body.comment != null) {
@@ -657,6 +704,7 @@ router
         compra.save(function (err) {
           if (err) {
             res.send(err);
+            return;
           }
           res.json({ message: "Validacion de compra agregada" });
         });

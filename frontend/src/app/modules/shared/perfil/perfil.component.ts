@@ -33,7 +33,7 @@ export class PerfilComponent implements OnInit {
     this.product = this.products[index];
     this.userService.removeProduct(this.product.idProd).subscribe(data => {
       alert('Producto eliminado');
-      this.router.navigateByUrl('/perfil');
+      window.location.reload();
     },
     error => {
       console.log(error);

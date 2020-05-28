@@ -20,7 +20,7 @@ export class CarritoComponent implements OnInit {
     else {
       this.userService.getCarritoUser().subscribe(carrito => {
         this.carrito = carrito[0];
-        if (this.carrito == null){
+        if (this.carrito == null || this.carrito.products === ''){
           alert('Carrito vacio');
           this.router.navigateByUrl('/home');
         }
@@ -38,6 +38,7 @@ export class CarritoComponent implements OnInit {
   eliminarDelCarrito(id) {
     this.userService.removeProductFromCarrito(id).subscribe(data => {
       alert('Producto eliminado del carrito');
+      window.location.reload();
     },
     error => {
       console.log(error);

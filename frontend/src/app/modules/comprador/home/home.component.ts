@@ -55,12 +55,16 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  async agregarAlCarrito(id) {
+  agregarAlCarrito(id) {
     this.userService.addProductToCarrito(id).subscribe(data => {
       alert('Producto agregado al carrito');
     },
     error => {
       console.log(error);
+      if (error.message === 'Producto ya en el carrito') {
+        alert(error.message);
+
+      }
     });
   }
 

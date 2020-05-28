@@ -42,6 +42,9 @@ export class UserService {
         localStorage.setItem('idUser', this.usr); // Obtener ID usuario
         console.log(this.usr);
         this.router.navigateByUrl('/home');
+      },
+      error => {
+        alert(error.error.message);
       });
     }
     else{

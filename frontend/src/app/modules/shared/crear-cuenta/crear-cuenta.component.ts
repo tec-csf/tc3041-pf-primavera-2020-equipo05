@@ -28,6 +28,10 @@ export class CrearCuentaComponent implements OnInit {
       },
       error => {
         console.log(error);
+        if (error.message === 'Email already exists') {
+          alert(error.message);
+
+        }
       });
     }
     else {

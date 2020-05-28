@@ -16,6 +16,7 @@ export class NavBarComponent implements OnInit {
   }
 
   logOut() {
+    alert('Sesion terminada');
     this.userService.logout().subscribe(data => {
       console.log(data);
       this.router.navigateByUrl('/log-in');

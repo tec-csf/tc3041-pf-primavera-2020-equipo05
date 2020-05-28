@@ -20,7 +20,6 @@ export class LogInComponent implements OnInit {
   onSubmit() {
     const user = {email: this.email, password: this.password};
     this.userService.login(user);
-    
   }
 
 }

@@ -33,17 +33,16 @@ export class UserService {
 
     console.log(localStorage.getItem('idUser'));
 
-    if (localStorage.getItem('idUser')===null || localStorage.getItem('idUser')===undefined){
-      console.log("User null");
-      this.http.post(endpoint + 'login', user).subscribe(data => {/////
+    if (localStorage.getItem('idUser') === null || localStorage.getItem('idUser') === undefined){
+      console.log('User null');
+      this.http.post(endpoint + 'login', user).subscribe(data => {
         console.log(data);
         this.usr = data;
         this.usr = this.usr.key._id;
-        localStorage.setItem('idUser',this.usr);/////////////Obtener ID usuario
+        localStorage.setItem('idUser', this.usr); // Obtener ID usuario
         console.log(this.usr);
-        this.router.navigateByUrl('/home')
-      });//////////////////////////////////////////////////////////////
-      //return this.http.post(endpoint + 'login', user);
+        this.router.navigateByUrl('/home');
+      });
     }
     else{
       this.usr = localStorage.getItem('idUser');
@@ -56,7 +55,6 @@ export class UserService {
 
   logout() {
     this.usr = '';
-    console.log("Se borraron tus datos bro")
     localStorage.removeItem('idUser');
     return this.http.get(endpoint + 'logout');
   }

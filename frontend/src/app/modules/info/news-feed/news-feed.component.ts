@@ -18,6 +18,7 @@ export class NewsFeedComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.userService.getUser() == null) {
+      alert('No has iniciado sesion');
       this.router.navigateByUrl('/log-in');
     }
     else {

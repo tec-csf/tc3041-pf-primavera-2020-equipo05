@@ -14,13 +14,14 @@ export class CarritoComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.userService.getUser() == null) {
+      alert('No has iniciado sesion');
       this.router.navigateByUrl('/log-in');
     }
     else {
       this.userService.getCarritoUser().subscribe(carrito => {
         this.carrito = carrito[0];
-        if(this.carrito==null){
-          alert("Carrito vacio");
+        if (this.carrito == null){
+          alert('Carrito vacio');
           this.router.navigateByUrl('/home');
         }
         else{

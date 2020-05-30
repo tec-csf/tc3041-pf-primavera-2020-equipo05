@@ -8,6 +8,7 @@ var Compra = require("../models/compra");
 var newsFeed = require("../models/newsFeed");
 
 var router = express.Router();
+var passwordHash = require('password-hash')
 
 /* router.get("/", function (req, res) {
   res.json({

@@ -1,14 +1,12 @@
 var express = require('express');
-var redis   = require("redis");
 var session = require('express-session');
 var redisStore = require('connect-redis')(session);
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var Cookies = require('cookies');
 
-var client  = redis.createClient();
-//var client1  = redis.createClient(); // prueba para cerar un cliente
 var app = express();
+
 
 const cors = require('cors');
 app.use(cors());
@@ -51,13 +49,14 @@ router.use(function (req, res, next) {
   next();
 }); //funcion habilita el middleware
 
-client.on('connect', function() {
+const redisClient = require ('./redis')
+redisClient.on('connect', function() {
   console.log("Connected")
 });
 app.use(session({
   secret: 'ssshhhhh',
   // create new redis store.
-  store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+  store: new redisStore({client: redisClient}),
   saveUninitialized: true,
   resave: false,
   cookie: { secure: false }

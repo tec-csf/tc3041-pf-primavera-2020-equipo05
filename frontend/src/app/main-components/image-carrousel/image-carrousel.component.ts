@@ -26,7 +26,7 @@ export class ImageCarrouselComponent implements OnInit {
   }
 
   isContactView() {
-    // return true if the current page is login
+    // return true if the current page is contactos
     return this.router.url.match('^/contacto$');
   }
 

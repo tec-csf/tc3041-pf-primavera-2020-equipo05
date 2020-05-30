@@ -20,7 +20,7 @@ export class CarritoComponent implements OnInit {
     else {
       this.userService.getCarritoUser().subscribe(carrito => {
         this.carrito = carrito[0];
-        if (this.carrito == null || this.carrito.products === ''){
+        if (this.carrito == null || this.carrito.products.length === 0){
           alert('Carrito vacio');
           this.router.navigateByUrl('/home');
         }

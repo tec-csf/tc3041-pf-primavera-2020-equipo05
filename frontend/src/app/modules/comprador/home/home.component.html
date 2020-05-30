@@ -9,8 +9,8 @@
   </div>
 
   <div class="row justify-content-md-center">
-    <div class="col col-lg-4" *ngFor="let product of allProducts; let i = index">
-      <div class="card">
+    <div class="col-md-4 col-sm-6 col-12" *ngFor="let product of allProducts; let i = index">
+      <div class="card h-100">
         <img src="{{ product.url }}" class="card-img-top img-responsive" width="300" height="200"  alt="..." />
         <div class="card-body">
           <h5 class="card-title">{{ product.name }}</h5>

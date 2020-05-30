@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import {Product} from '../interfaces/product';
-import * as carritos from '../../../../datasets/carritos.json';
 import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
 import { map, catchError, tap} from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -15,7 +14,6 @@ export class UserService {
   result: any;
   usr: any;
   product: Product;
-  carrito: any = (carritos as any).default;
   products: any;
   httpOptions = {
     headers: new HttpHeaders({

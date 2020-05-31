@@ -48,7 +48,7 @@
             >Perfil</a
           >
         </li>
-         <li class="nav-item">
+         <li class="nav-item" *ngIf="!getActive()">
           <a
             class="nav-link"
             (click)="logOut()"

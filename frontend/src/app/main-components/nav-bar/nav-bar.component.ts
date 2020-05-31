@@ -15,6 +15,11 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getActive(){
+    if (this.userService.getUser() == null) {
+      return true;
+    }
+  }
   logOut() {
     alert('Sesion terminada');
     this.userService.logout().subscribe(data => {

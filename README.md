@@ -78,7 +78,7 @@ Para el manejo de sesiónes se utilizó Redis. Esto es para tener las sesiones a
 
 ### 3.2 Arquitectura de la solución
 
-![Diagrama](datasets/modeloRelacional.png)
+![Diagrama](datasets/ModeloRelacional.png)
 
 ### 3.3 Frontend
 

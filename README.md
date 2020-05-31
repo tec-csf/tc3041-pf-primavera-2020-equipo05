@@ -80,7 +80,7 @@ A continuación aparecen descritos los diferentes elementos que forman parte de 
 ### 3.4 Backend
 Nuestro backend tiene la siguiente estructura:
 ```
-    - backend			        # Carpeta con la solución del backend
+    - backend               # Carpeta con la solución del backend
         - app                   # Carpeta con los modelos y rutas del API
             - models            # Carpeta con models de Mongoose para MongoDB
             - routes            # Carpeta con las rutas de la API
@@ -193,8 +193,8 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
     * **Formato JSON del cuerpo de la solicitud**: 
         ```json
         { 
-            "email": <email>,
-            "password": <password>
+            "email": "email",
+            "password": "password"
         }
         ```
     * **Formato JSON de la respuesta**:
@@ -202,8 +202,8 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
         {
             "message": "Login success",
             "key": {
-                "_id": <ID>,
-                "email": <email>
+                "_id": "ID",
+                "email": "email"
             }
         }
         ```
@@ -253,12 +253,12 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
     * **Formato JSON del cuerpo de la solicitud**: 
         ```json
         {
-            "idUser": <ID user>,
-            "name": <Nombre producto>,
-            "condition": <Condición>,
-            "description": <Descripción del producto>,
-            "price": <Precio>,
-            "url": <URL de imagen>
+            "idUser": "ID user",
+            "name": "Nombre producto",
+            "condition": "Condición",
+            "description": "Descripción del producto",
+            "price": "Precio",
+            "url": "URL de imagen"
         }
         ```
     * **Formato JSON de la respuesta**:
@@ -278,7 +278,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
         * 400: Error de validación:
              ```json
             { 
-                "error": <mensaje del error>
+                "error": "mensaje del error"
             }
             ```
         * 200: Producto agregado.
@@ -300,32 +300,32 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
                 {
                     "products": [
                         {
-                            "idProd": <ID producto>,
-                            "name": <Nombre producto>,
-                            "condition": <Condición>,
-                            "description": <Descripción del producto>,
-                            "quantity": <Cantidad>,
-                            "price": <Precio>,
-                            "url": <URL de imagen>
+                            "idProd": "ID producto",
+                            "name": "Nombre producto",
+                            "condition": "Condición",
+                            "description": "Descripción del producto",
+                            "quantity": "Cantidad",
+                            "price": "Precio",
+                            "url": "URL de imagen"
                         },
                         {
-                            "idProd": <ID producto>,
-                            "name": <Nombre producto>,
-                            "condition": <Condición>,
-                            "description": <Descripción del producto>,
-                            "quantity": <Cantidad>,
-                            "price": <Precio>,
-                            "url": <URL de imagen>
+                            "idProd": "ID producto",
+                            "name": "Nombre producto",
+                            "condition": "Condición",
+                            "description": "Descripción del producto",
+                            "quantity": "Cantidad",
+                            "price": "Precio",
+                            "url": "URL de imagen"
                         }
                     ],
-                    "_id": <Id Mongo>,
-                    "idUser": <ID user>
+                    "_id": "Id Mongo",
+                    "idUser": "ID user"
                 },
                 ...
                 ...
             ],
-            "currentPage": <página actual>,
-            "pages": <número de páginas totales>
+            "currentPage": "página actual",
+            "pages": "número de páginas totales"
         }
         ```
     * **Códigos de error**:
@@ -347,24 +347,24 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
         * El único que tiene formato JSON de solicitud es el PUT:
         ```json
         {
-            "name": <Nombre producto>,
-            "condition": <Condición>,
-            "description": <Descripción del producto>,
-            "price": <Precio>,
-            "url": <URL de imagen>
+            "name": "Nombre producto",
+            "condition": "Condición",
+            "description": "Descripción del producto",
+            "price": "Precio",
+            "url": "URL de imagen"
         }
         ```
     * **Formato JSON de la respuesta**:
         * GET:
             ```json
             {
-                "idProd": <ID producto>,
-                "name": <Nombre producto>,
-                "condition": <Condición>,
-                "description": <Descripción del producto>,
-                "quantity": <Cantidad>,
-                "price": <Precio>,
-                "url": <URL de imagen>
+                "idProd": "ID producto",
+                "name": "Nombre producto",
+                "condition": "Condición",
+                "description": "Descripción del producto",
+                "quantity": "Cantidad",
+                "price": "Precio",
+                "url": "URL de imagen"
             }
             ```
         * PUT:
@@ -407,25 +407,25 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
     * **Formato JSON de la respuesta**:
         ```json
         {
-            "_id": <ID de MongoDB>,
-            "idUser": <ID user>,
+            "_id": "ID de MongoDB",
+            "idUser": "ID user",
             "products": [
                 {
-                    "idProd": <ID producto>,
-                    "name": <Nombre producto>,
-                    "condition": <Condición>,
-                    "description": <Descripción del producto>,
-                    "quantity": <Cantidad>,
-                    "price": <Precio>,
-                    "url": <URL de imagen>
+                    "idProd": "ID producto",
+                    "name": "Nombre producto",
+                    "condition": "Condición",
+                    "description": "Descripción del producto",
+                    "quantity": "Cantidad",
+                    "price": "Precio",
+                    "url": "URL de imagen"
                 },
                 ...
                 ...
             ],
             "user": {
-                "profile_pic": <URL de imagen de perfil>,
-                "name": <nombre>,
-                "lname": <apellidos>
+                "profile_pic": "URL de imagen de perfil",
+                "name": "nombre",
+                "lname": "apellidos"
             }
         }
         ```
@@ -452,22 +452,22 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
         * El único que tiene formato JSON de solicitud es el POST:
         ```json
         {
-            "idUser": <ID user>,
-            "message": <post>,
+            "idUser": "ID user",
+            "message": "post",
         }
         ```
     * **Formato JSON de la respuesta**:
         * GET:
             ```json
             {
-                "_id": <ID MongoDB>,
-                "message": <post>,
+                "_id": "ID MongoDB",
+                "message": "post",
                 "user": {
-                    "profile_pic": <URL de imagen de perfil>,
-                    "name": <nombre>,
-                    "lname": <apellidos>
+                    "profile_pic": "URL de imagen de perfil",
+                    "name": "nombre",
+                    "lname": "apellidos"
                 },
-                "time": <fecha y hora del post>
+                "time": "fecha y hora del post"
             }
             ...
             ...
@@ -501,26 +501,26 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
         * El único que tiene formato JSON de solicitud es el POST:
         ```json
         {
-            "profile_pic": <URL de imagen de perfil>,
-            "name": <nombre>,
-            "lname": <apellidos>,
-            "dBirth": <fecha de nacimiento>,
-            "country": <país>,
-            "email": <email>,
-            "password": <password hasheada>
+            "profile_pic": "URL de imagen de perfil",
+            "name": "nombre",
+            "lname": "apellidos",
+            "dBirth": "fecha de nacimiento",
+            "country": "país",
+            "email": "email",
+            "password": "password hasheada"
         }
         ```
     * **Formato JSON de la respuesta**:
         * GET:
             ```json
             {
-                "idUser": <ID user>,
-                "profile_pic": <URL de imagen de perfil>,
-                "name": <nombre>,
-                "lname": <apellidos>,
-                "dBirth": <fecha de nacimiento>,
-                "country": <país>,
-                "email": <email>
+                "idUser": "ID user",
+                "profile_pic": "URL de imagen de perfil",
+                "name": "nombre",
+                "lname": "apellidos",
+                "dBirth": "fecha de nacimiento",
+                "country": "país",
+                "email": "email"
             }
             ...
             ...
@@ -556,25 +556,25 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
         * El único que tiene formato JSON de solicitud es el PUT:
         ```json
         {
-            "profile_pic": <URL de imagen de perfil>,
-            "name": <nombre>,
-            "lname": <apellidos>,
-            "dBirth": <fecha de nacimiento>,
-            "country": <país>,
-            "email": <email>
+            "profile_pic": "URL de imagen de perfil",
+            "name": "nombre",
+            "lname": "apellidos",
+            "dBirth": "fecha de nacimiento",
+            "country": "país",
+            "email": "email"
         }
         ```
     * **Formato JSON de la respuesta**:
         * GET:
             ```json
             {
-                "idUser": <ID user>,
-                "profile_pic": <URL de imagen de perfil>,
-                "name": <nombre>,
-                "lname": <apellidos>,
-                "dBirth": <fecha de nacimiento>,
-                "country": <país>,
-                "email": <email>
+                "idUser": "ID user",
+                "profile_pic": "URL de imagen de perfil",
+                "name": "nombre",
+                "lname": "apellidos",
+                "dBirth": "fecha de nacimiento",
+                "country": "país",
+                "email": "email"
             }
             ```
         * PUT:
@@ -620,19 +620,19 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
             {
                 "products": [
                     {
-                        "idProd": <ID producto>,
-                        "name": <Nombre producto>,
-                        "condition": <Condición>,
-                        "description": <Descripción del producto>,
-                        "quantity": <Cantidad>,
-                        "price": <Precio>,
-                        "url": <URL de imagen>
+                        "idProd": "ID producto",
+                        "name": "Nombre producto",
+                        "condition": "Condición",
+                        "description": "Descripción del producto",
+                        "quantity": "Cantidad",
+                        "price": "Precio",
+                        "url": "URL de imagen"
                     },
                     ...
                     ...
                 ],
-                "_id": <ID MongoDB>,
-                "idUser": <ID User>
+                "_id": "ID MongoDB",
+                "idUser": "ID User"
             }
             ...
             ...
@@ -657,7 +657,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
         * El único que tiene formato JSON de solicitud es el POST:
         ```json
         {
-            "idProd": <ID del producto>
+            "idProd": "ID del producto"
         }
         ```
     * **Formato JSON de la respuesta**:
@@ -667,19 +667,19 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
                 {
                     "products": [
                         {
-                            "idProd": <ID producto>,
-                            "name": <Nombre producto>,
-                            "condition": <Condición>,
-                            "description": <Descripción del producto>,
-                            "quantity": <Cantidad>,
-                            "price": <Precio>,
-                            "url": <URL de imagen>
+                            "idProd": "ID producto",
+                            "name": "Nombre producto",
+                            "condition": "Condición",
+                            "description": "Descripción del producto",
+                            "quantity": "Cantidad",
+                            "price": "Precio",
+                            "url": "URL de imagen"
                         },
                         ...
                         ...
                     ],
-                    "_id": <ID MongoDB>,
-                    "idUser": <ID User>
+                    "_id": "ID MongoDB",
+                    "idUser": "ID User"
                 }
             ]
             ```
@@ -732,29 +732,29 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
             {
                 "products": [
                     {
-                        "idProd": <ID producto>,
-                        "name": <Nombre producto>,
-                        "condition": <Condición>,
-                        "description": <Descripción del producto>,
-                        "quantity": <Cantidad>,
-                        "price": <Precio>,
-                        "url": <URL de imagen>
+                        "idProd": "ID producto",
+                        "name": "Nombre producto",
+                        "condition": "Condición",
+                        "description": "Descripción del producto",
+                        "quantity": "Cantidad",
+                        "price": "Precio",
+                        "url": "URL de imagen"
                     },
                     ...
                 ],
                 "address": [
                     {
-                        "street": <calle>,
-                        "country": <país>,
-                        "state": <estado>,
-                        "zip": <CP>,
-                        "apartment": <apartamento (opcional)>
+                        "street": "calle",
+                        "country": "país",
+                        "state": "estado",
+                        "zip": "CP",
+                        "apartment": "apartamento (opcional)"
                     }
                 ],
-                 "_id": <ID MongoDB>,
-                "idUser": <ID User>,
-                "validation": <boleano>,
-                "comment": <comentario de la entrega (opcional)>
+                 "_id": "ID MongoDB",
+                "idUser": "ID User",
+                "validation": "boleano",
+                "comment": "comentario de la entrega (opcional)"
 
             },
             ...
@@ -778,7 +778,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
         * El único que tiene formato JSON de solicitud es el POST:
         ```json
         {
-            "address": <Objeto dirección>
+            "address": "Objeto dirección"
         }
         ```
     * **Formato JSON de la respuesta**:
@@ -788,29 +788,29 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
                 {
                     "products": [
                         {
-                            "idProd": <ID producto>,
-                            "name": <Nombre producto>,
-                            "condition": <Condición>,
-                            "description": <Descripción del producto>,
-                            "quantity": <Cantidad>,
-                            "price": <Precio>,
-                            "url": <URL de imagen>
+                            "idProd": "ID producto",
+                            "name": "Nombre producto",
+                            "condition": "Condición",
+                            "description": "Descripción del producto",
+                            "quantity": "Cantidad",
+                            "price": "Precio",
+                            "url": "URL de imagen"
                         },
                         ...
                     ],
                     "address": [
                         {
-                            "street": <calle>,
-                            "country": <país>,
-                            "state": <estado>,
-                            "zip": <CP>,
-                            "apartment": <apartamento (opcional)>
+                            "street": "calle",
+                            "country": "país",
+                            "state": "estado",
+                            "zip": "CP",
+                            "apartment": "apartamento (opcional)"
                         }
                     ],
-                    "_id": <ID MongoDB>,
-                    "idUser": <ID User>,
-                    "validation": <boleano>,
-                    "comment": <comentario de la entrega (opcional)>
+                    "_id": "ID MongoDB",
+                    "idUser": "ID User",
+                    "validation": "boleano",
+                    "comment": "comentario de la entrega (opcional)"
 
                 }
             ]
@@ -842,8 +842,8 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
         * El único que tiene formato JSON de solicitud es el POST:
         ```json
         {
-            "validation": <booleano>,
-            "comment": <comentario de la entrega (opcional)>
+            "validation": "booleano",
+            "comment": "comentario de la entrega (opcional)"
         }
         ```
     * **Formato JSON de la respuesta**:

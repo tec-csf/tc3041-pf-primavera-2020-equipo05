@@ -78,32 +78,783 @@ A continuación aparecen descritos los diferentes elementos que forman parte de 
 #### 3.3.3 Librerías de funciones o dependencias
 
 ### 3.4 Backend
+Nuestro backend tiene la siguiente estructura:
+```
+    - backend			        # Carpeta con la solución del backend
+        - app                   # Carpeta con los modelos y rutas del API
+            - models            # Carpeta con models de Mongoose para MongoDB
+            - routes            # Carpeta con las rutas de la API
+        - node_modules          # Carpeta con los módulos por parte de Node
+        - package-lock.json     # JSON con las dependencias enlistadas de Node
+        - package.json          # JSON con las dependencias enlistadas de Node
+        - redis.js              # Archivo de configuración de conexión a Redis
+        - server.js             # Archivo donde se corre todo server
+        - setupServer.js        # Archivo de configuración del server.js
+```
 
-*[Incluya aquí una explicación de la solución utilizada para el backend del proyecto. No olvide incluir las ligas o referencias donde se puede encontrar información de los lenguajes de programación, frameworks y librerías utilizadas.]*
+Como se puede mostrar en la estructura anterior, se utilizó principalmente Node, con sus respectivos módulos y dependencias, las cuales se encuentran enlistadas en [package.json](backend/package.json), junto a [package-lock.json](backend/package-lock.json)
+
+Al emplear Node, se utiliza además Javascript, ya que es el lenguaje de programación que utiliza.
+
+Para la Base de Datos principal se utilizó MongoDB, una base de datos No SQL. Y la conexión para insertar los datos base de nuestra aplicación ([users.json](datasets/users.json), [productsUsers.json](datasets/clases.json), [newsFeed.json](datasets/newsFeed.json)) y para comprobar cualquier cambio, se realizó en MongoDB Compass.
+
+Para la conexión de nuestro API, que en este caso es el propio Backend, y MongoDB se utilizó la dependencia Mongoose, la cual facilita mucho la conexión y las operaciones CRUD, por medio de modelos, los cuales están en la carpeta de [models](backend/app/models) (como se aprecia en la estructura anterior).
+
+En este caso. la conexión entre el Frontend y la Base de Datos, junto a sus operaciones, se realiza por medio de las rutas, de nuestro API, implementadas en el archivo [main.js](backend/app/routes/main.js)
+
+Por último, se implementó la Base de Datos Redis, para el manejo de sesiones del lado del Backend.
+
+Por último, se utilizaron las dependencias Body-parser, Cors, Express, Mongoose, entre otras más mencionadas a continuación.
 
 #### 3.4.1 Lenguaje de programación
+
+Javascript
+
 #### 3.4.2 Framework
+
+* Node
+
+* MongoDB Compass
+
+* Redis Lab
+
 #### 3.4.3 Librerías de funciones o dependencias
+
+* Body-parser, versión 1.19.0
+
+* Connect-redis, versión 4.0.4
+
+* Cors, versión 2.8.5
+
+* Express, versión 4.17.1
+
+* Express-session, versión 1.17.1
+
+* Mongoose, versión 5.9.14
+
+* Morgan, versión 1.10.0
+
+* Password-hash, versión 1.2.2
+
+* Redis, versión 3.0.2
+
 
 ### 3.5 API
 
-*[Incluya aquí una explicación de la solución utilizada para implementar la API del proyecto. No olvide incluir las ligas o referencias donde se puede encontrar información de los lenguajes de programación, frameworks y librerías utilizadas.]*
+Nuestra API implementada, como mencionamos anteriormente en la sección de Backend, es parte del mismo. No se utilizó una API por separado, sino se aprovechó la implementación del mismo Backend para inicializar las rutas.
+
+Algo que sí decidimos aplicar fue el tener un endpoint para cada operación realizada, además de correr la API en otro puerto independiente al Frontend.
 
 #### 3.5.1 Lenguaje de programación
+
+Javascript
+
 #### 3.5.2 Framework
+
+* Node
+
+* MongoDB Compass
+
+* Redis Lab
+
 #### 3.5.3 Librerías de funciones o dependencias
 
-*[Incluya aquí una explicación de cada uno de los endpoints que forman parte de la API. Cada endpoint debe estar correctamente documentado.]*
+* Body-parser, versión 1.19.0
 
-*[Por cada endpoint debe incluir lo siguiente:]*
+* Connect-redis, versión 4.0.4
 
-* **Descripción**:
-* **URL**:
-* **Verbos HTTP**:
-* **Headers**:
-* **Formato JSON del cuerpo de la solicitud**: 
-* **Formato JSON de la respuesta**:
-* **Códigos de error**:
+* Cors, versión 2.8.5
+
+* Express, versión 4.17.1
+
+* Express-session, versión 1.17.1
+
+* Mongoose, versión 5.9.14
+
+* Morgan, versión 1.10.0
+
+* Password-hash, versión 1.2.2
+
+* Redis, versión 3.0.2
+
+El endpoint raiz que utilizamos fue, antes del despliegue en la nube: http://localhost:8080/api/
+
+A partir del endpoint inicial, implementamos las siguientes rutas:
+
+1. Login
+    * **Descripción**:
+        * Es una petición para poder hace login. Se accede a MongoDB para verificar las credenciales, y después se crea una sesión en Redis.
+    * **URL**:
+        * http://localhost:8080/api/login
+    * **Verbos HTTP**:
+        * POST
+    * **Headers**:
+        * N/A
+    * **Formato JSON del cuerpo de la solicitud**: 
+        ```json
+        { 
+            "email": <email>,
+            "password": <password>
+        }
+        ```
+    * **Formato JSON de la respuesta**:
+        ```json
+        {
+            "message": "Login success",
+            "key": {
+                "_id": <ID>,
+                "email": <email>
+            }
+        }
+        ```
+    * **Códigos de error**:
+        * 500: error con MongoDB
+        * 400: Error de aunteticación:
+            ```json
+            { 
+                "message": "Usuario o password incorrectos"
+            }
+            ```
+        * 400: Error de datos faltantes:
+             ```json
+            { 
+                "error": "missing fields"
+            }
+            ```
+        * 200: Login exitoso.
+2. Logout
+    * **Descripción**:
+        * Es una petición para poder hace logout. Se destruye la sesión de Redis.
+    * **URL**:
+        * http://localhost:8080/api/logout
+    * **Verbos HTTP**:
+        * GET
+    * **Headers**:
+        * N/A
+    * **Formato JSON del cuerpo de la solicitud**: 
+        * N/a
+    * **Formato JSON de la respuesta**:
+        ```json
+        {
+            "message": "Logout success",
+        }
+        ```
+    * **Códigos de error**:
+        * 200: Logout exitoso.
+3. Productos del usuario
+    * **Descripción**:
+        * Es una petición para insertar un producto nuevo a la venta, por medio del usuario quien lo vende. Se accede a MongoDB para obtener el último ID e ingresar los productos en el usuario correspondiente.
+    * **URL**:
+        * http://localhost:8080/api/productsUsers
+    * **Verbos HTTP**:
+        * POST
+    * **Headers**:
+        * N/A
+    * **Formato JSON del cuerpo de la solicitud**: 
+        ```json
+        {
+            "idUser": <ID user>,
+            "name": <Nombre producto>,
+            "condition": <Condición>,
+            "description": <Descripción del producto>,
+            "price": <Precio>,
+            "url": <URL de imagen>
+        }
+        ```
+    * **Formato JSON de la respuesta**:
+        ```json
+        {
+            "mensaje": "Producto agregado",
+        }
+        ```
+    * **Códigos de error**:
+        * 500: error con MongoDB o del servidor
+        * 404: No encontrado
+            ```json
+            { 
+                "message": "not found"
+            }
+            ```
+        * 400: Error de validación:
+             ```json
+            { 
+                "error": <mensaje del error>
+            }
+            ```
+        * 200: Producto agregado.
+4. Todos los productos
+    * **Descripción**:
+        * Es una petición para obtener todos los productos para desplegarlos en el home. Recibe como parámetro la página actual para implementar el filtrado, la cual se hace for usuario.
+    * **URL**:
+        * http://localhost:8080/api/allProducts/:page
+    * **Verbos HTTP**:
+        * GET
+    * **Headers**:
+        * N/A
+    * **Formato JSON del cuerpo de la solicitud**: 
+        * N/A
+    * **Formato JSON de la respuesta**:
+        ```json
+        {
+            "products": [
+                {
+                    "products": [
+                        {
+                            "idProd": <ID producto>,
+                            "name": <Nombre producto>,
+                            "condition": <Condición>,
+                            "description": <Descripción del producto>,
+                            "quantity": <Cantidad>,
+                            "price": <Precio>,
+                            "url": <URL de imagen>
+                        },
+                        {
+                            "idProd": <ID producto>,
+                            "name": <Nombre producto>,
+                            "condition": <Condición>,
+                            "description": <Descripción del producto>,
+                            "quantity": <Cantidad>,
+                            "price": <Precio>,
+                            "url": <URL de imagen>
+                        }
+                    ],
+                    "_id": <Id Mongo>,
+                    "idUser": <ID user>
+                },
+                ...
+                ...
+            ],
+            "currentPage": <página actual>,
+            "pages": <número de páginas totales>
+        }
+        ```
+    * **Códigos de error**:
+        * 500: error con MongoDB o del servidor
+        * 200: Productos JSON.
+5. Productos por ID propio
+    * **Descripción**:
+        * Es una petición para realizar diferentes operaciones con un producto en específico, por medio de su ID dado por nosotros, no el de MongoDB. Estas operaciones son:
+            * Obtener la información del producto (GET).
+            * Actualizar un producto (PUT).
+            * Eliminar un producto (DELETE)
+    * **URL**:
+        * http://localhost:8080/api/products/:id_product
+    * **Verbos HTTP**:
+        * GET, PUT, DELETE
+    * **Headers**:
+        * N/A
+    * **Formato JSON del cuerpo de la solicitud**: 
+        * El único que tiene formato JSON de solicitud es el PUT:
+        ```json
+        {
+            "name": <Nombre producto>,
+            "condition": <Condición>,
+            "description": <Descripción del producto>,
+            "price": <Precio>,
+            "url": <URL de imagen>
+        }
+        ```
+    * **Formato JSON de la respuesta**:
+        * GET:
+            ```json
+            {
+                "idProd": <ID producto>,
+                "name": <Nombre producto>,
+                "condition": <Condición>,
+                "description": <Descripción del producto>,
+                "quantity": <Cantidad>,
+                "price": <Precio>,
+                "url": <URL de imagen>
+            }
+            ```
+        * PUT:
+            ```json
+            {
+                "mensaje": "Producto actualizado",
+            }
+            ```
+        * DELETE:
+            ```json
+            {
+                "mensaje": "Producto eliminado",
+            }
+            ```
+    * **Códigos de error**:
+        * 404: No encontrado
+            ```json
+            { 
+                "message": "not found"
+            }
+            ```
+        * 400: Error de datos faltantes:
+            ```json
+            { 
+                "error": "missing fields"
+            }
+            ```
+        * 200: Acción realizada.
+6. Productos por Usuario
+    * **Descripción**:
+        * Es una petición para obtener los productos en venta que tiene un usuario en específico. Hace una agregación para acceder a los productos, además de regresar los datos principales del usuario para el perfil, siendo la foto de perfil, nombre y apellidos.
+    * **URL**:
+        * http://localhost:8080/api/productsUsers/:id_user
+    * **Verbos HTTP**:
+        * GET
+    * **Headers**:
+        * N/A
+    * **Formato JSON del cuerpo de la solicitud**:
+        * N/A
+    * **Formato JSON de la respuesta**:
+        ```json
+        {
+            "_id": <ID de MongoDB>,
+            "idUser": <ID user>,
+            "products": [
+                {
+                    "idProd": <ID producto>,
+                    "name": <Nombre producto>,
+                    "condition": <Condición>,
+                    "description": <Descripción del producto>,
+                    "quantity": <Cantidad>,
+                    "price": <Precio>,
+                    "url": <URL de imagen>
+                },
+                ...
+                ...
+            ],
+            "user": {
+                "profile_pic": <URL de imagen de perfil>,
+                "name": <nombre>,
+                "lname": <apellidos>
+            }
+        }
+        ```
+    * **Códigos de error**:
+        * 404: No encontrado
+            ```json
+            { 
+                "message": "not found"
+            }
+            ```
+        * 200: JSON Resultado.
+7. News Feed
+    * **Descripción**:
+        * Es una petición para realizar diferentes operaciones con los posts que están en la colección NewsFeed
+            * Obtener todos los posts, junto a los datos principales del usuario para el perfil, siendo la foto de perfil, nombre y apellidos. (GET).
+            * Postear algo nuevo (POST).
+    * **URL**:
+        * http://localhost:8080/api/newsFeed
+    * **Verbos HTTP**:
+        * GET, POST
+    * **Headers**:
+        * N/A
+    * **Formato JSON del cuerpo de la solicitud**:
+        * El único que tiene formato JSON de solicitud es el POST:
+        ```json
+        {
+            "idUser": <ID user>,
+            "message": <post>,
+        }
+        ```
+    * **Formato JSON de la respuesta**:
+        * GET:
+            ```json
+            {
+                "_id": <ID MongoDB>,
+                "message": <post>,
+                "user": {
+                    "profile_pic": <URL de imagen de perfil>,
+                    "name": <nombre>,
+                    "lname": <apellidos>
+                },
+                "time": <fecha y hora del post>
+            }
+            ...
+            ...
+            ```
+        * POST:
+            ```json
+            {
+                "mensaje": "Post creado",
+            }
+            ```
+    * **Códigos de error**:
+        * 400: Error de datos faltantes:
+            ```json
+            { 
+                "error": "missing fields"
+            }
+            ```
+        * 200: Acción realizada.
+8. Usuarios
+    * **Descripción**:
+        * Es una petición para realizar diferentes operaciones con los usuarios
+            * Obtener la información de todos los usuarios, excluyendo el password hasheado, por seguridad (GET).
+            * Crear un usuario nuevo, accediendo a la colección users para obtener el último ID e ingresar un usuario nuevo (POST).
+    * **URL**:
+        * http://localhost:8080/api/users
+    * **Verbos HTTP**:
+        * GET, POST
+    * **Headers**:
+        * N/A
+    * **Formato JSON del cuerpo de la solicitud**:
+        * El único que tiene formato JSON de solicitud es el POST:
+        ```json
+        {
+            "profile_pic": <URL de imagen de perfil>,
+            "name": <nombre>,
+            "lname": <apellidos>,
+            "dBirth": <fecha de nacimiento>,
+            "country": <país>,
+            "email": <email>,
+            "password": <password hasheada>
+        }
+        ```
+    * **Formato JSON de la respuesta**:
+        * GET:
+            ```json
+            {
+                "idUser": <ID user>,
+                "profile_pic": <URL de imagen de perfil>,
+                "name": <nombre>,
+                "lname": <apellidos>,
+                "dBirth": <fecha de nacimiento>,
+                "country": <país>,
+                "email": <email>
+            }
+            ...
+            ...
+            ```
+        * POST:
+            ```json
+            {
+                "mensaje": "Usuario creado",
+            }
+            ```
+    * **Códigos de error**:
+        * 500: error con MongoDB o del servidor
+        * 400: Error de datos faltantes:
+            ```json
+            { 
+                "error": "missing fields"
+            }
+            ```
+        * 200: Acción realizada.
+9. Información del usuario por su ID
+    * **Descripción**:
+        * Es una petición para realizar diferentes operaciones con un usuario en específico, por medio de su ID dado por nosotros, no el de MongoDB. Estas operaciones son:
+            * Obtener la información del usuario (GET).
+            * Actualizar un usuario (PUT).
+            * Eliminar un usuario, en el cual primero se elimina ese usuario con susu productos en venta, y después la información del usuario (DELETE).
+    * **URL**:
+        * http://localhost:8080/api/users/:id_user
+    * **Verbos HTTP**:
+        * GET, PUT, DELETE
+    * **Headers**:
+        * N/A
+    * **Formato JSON del cuerpo de la solicitud**:
+        * El único que tiene formato JSON de solicitud es el PUT:
+        ```json
+        {
+            "profile_pic": <URL de imagen de perfil>,
+            "name": <nombre>,
+            "lname": <apellidos>,
+            "dBirth": <fecha de nacimiento>,
+            "country": <país>,
+            "email": <email>
+        }
+        ```
+    * **Formato JSON de la respuesta**:
+        * GET:
+            ```json
+            {
+                "idUser": <ID user>,
+                "profile_pic": <URL de imagen de perfil>,
+                "name": <nombre>,
+                "lname": <apellidos>,
+                "dBirth": <fecha de nacimiento>,
+                "country": <país>,
+                "email": <email>
+            }
+            ```
+        * PUT:
+            ```json
+            {
+                "mensaje": "Usuario actualizado",
+            }
+            ```
+        * DELETE:
+            ```json
+            {
+                "mensaje": "Usuario eliminado",
+            }
+            ```
+    * **Códigos de error**:
+        * 404: No encontrado
+            ```json
+            { 
+                "message": "not found"
+            }
+            ```
+        * 400: Error de datos faltantes:
+            ```json
+            { 
+                "error": "missing fields"
+            }
+            ```
+        * 200: Acción realizada.
+10. Todos los carritos
+    * **Descripción**:
+        * Es una petición para obtener todos los carritos actuales
+    * **URL**:
+        * http://localhost:8080/api/carrito
+    * **Verbos HTTP**:
+        * GET
+    * **Headers**:
+        * N/A
+    * **Formato JSON del cuerpo de la solicitud**:
+        * N/A
+    * **Formato JSON de la respuesta**:
+        ```json
+        [
+            {
+                "products": [
+                    {
+                        "idProd": <ID producto>,
+                        "name": <Nombre producto>,
+                        "condition": <Condición>,
+                        "description": <Descripción del producto>,
+                        "quantity": <Cantidad>,
+                        "price": <Precio>,
+                        "url": <URL de imagen>
+                    },
+                    ...
+                    ...
+                ],
+                "_id": <ID MongoDB>,
+                "idUser": <ID User>
+            }
+            ...
+            ...
+        ]
+        ```
+    * **Códigos de error**:
+        * 500: error con MongoDB o del servidor
+        * 200: Carrito JSON.
+11. Operaciones con carrito por ID User
+    * **Descripción**:
+        * Es una petición para realizar diferentes operaciones con un carrito de un usuario en específico, por medio de su ID dado por nosotros, no el de MongoDB. Estas operaciones son:
+            * Obtener el carrito del usuario (GET).
+            * Agregar un producto al carrito del usuario, en la cual se valida si ya está el producto en el carrito para no duplicarlo (POST).
+            * Eliminar un producto del carrito del usuario (DELETE).
+    * **URL**:
+        * http://localhost:8080/api/carrito/:id_user
+    * **Verbos HTTP**:
+        * GET, POST, DELETE
+    * **Headers**:
+        * N/A
+    * **Formato JSON del cuerpo de la solicitud**:
+        * El único que tiene formato JSON de solicitud es el POST:
+        ```json
+        {
+            "idProd": <ID del producto>
+        }
+        ```
+    * **Formato JSON de la respuesta**:
+        * GET:
+            ```json
+            [
+                {
+                    "products": [
+                        {
+                            "idProd": <ID producto>,
+                            "name": <Nombre producto>,
+                            "condition": <Condición>,
+                            "description": <Descripción del producto>,
+                            "quantity": <Cantidad>,
+                            "price": <Precio>,
+                            "url": <URL de imagen>
+                        },
+                        ...
+                        ...
+                    ],
+                    "_id": <ID MongoDB>,
+                    "idUser": <ID User>
+                }
+            ]
+            ```
+        * POST:
+            ```json
+            {
+                "mensaje": "Producto agregado al carrito",
+            }
+            ```
+        * DELETE:
+            ```json
+            {
+                "mensaje": "Producto eliminado del carrito"",
+            }
+            ```
+    * **Códigos de error**:
+        * 404: No encontrado
+            ```json
+            { 
+                "message": "not found"
+            }
+            ```
+        * 400: Error de datos faltantes:
+            ```json
+            { 
+                "error": "missing fields"
+            }
+            ```
+        * 400: Error de producto ya en el carrito:
+            ```json
+            { 
+                "message": "Producto ya en el carrito"
+            }
+            ```
+        * 200: Acción realizada.
+12. Todos las compras
+    * **Descripción**:
+        * Es una petición para obtener todos las compras
+    * **URL**:
+        * http://localhost:8080/api/compra
+    * **Verbos HTTP**:
+        * GET
+    * **Headers**:
+        * N/A
+    * **Formato JSON del cuerpo de la solicitud**:
+        * N/A
+    * **Formato JSON de la respuesta**:
+        ```json
+        [
+            {
+                "products": [
+                    {
+                        "idProd": <ID producto>,
+                        "name": <Nombre producto>,
+                        "condition": <Condición>,
+                        "description": <Descripción del producto>,
+                        "quantity": <Cantidad>,
+                        "price": <Precio>,
+                        "url": <URL de imagen>
+                    },
+                    ...
+                ],
+                "address": [
+                    {
+                        "street": <calle>,
+                        "country": <país>,
+                        "state": <estado>,
+                        "zip": <CP>,
+                        "apartment": <apartamento (opcional)>
+                    }
+                ],
+                 "_id": <ID MongoDB>,
+                "idUser": <ID User>,
+                "validation": <boleano>,
+                "comment": <comentario de la entrega (opcional)>
+
+            },
+            ...
+            ...
+        ```
+    * **Códigos de error**:
+        * 500: error con MongoDB o del servidor
+        * 200: Compra JSON.
+13. Operaciones con compra por ID User
+    * **Descripción**:
+        * Es una petición para realizar diferentes operaciones con una compra de un usuario en específico, por medio de su ID dado por nosotros, no el de MongoDB. Estas operaciones son:
+            * Obtener la última compra del usuario (GET).
+            * Comprar los productos del carrito del usuario, en el cual se eliminan los productos del carrito y del inventario (POST).
+    * **URL**:
+        * http://localhost:8080/api/compra/:id_user
+    * **Verbos HTTP**:
+        * GET, POST
+    * **Headers**:
+        * N/A
+    * **Formato JSON del cuerpo de la solicitud**:
+        * El único que tiene formato JSON de solicitud es el POST:
+        ```json
+        {
+            "address": <Objeto dirección>
+        }
+        ```
+    * **Formato JSON de la respuesta**:
+        * GET:
+            ```json
+            [
+                {
+                    "products": [
+                        {
+                            "idProd": <ID producto>,
+                            "name": <Nombre producto>,
+                            "condition": <Condición>,
+                            "description": <Descripción del producto>,
+                            "quantity": <Cantidad>,
+                            "price": <Precio>,
+                            "url": <URL de imagen>
+                        },
+                        ...
+                    ],
+                    "address": [
+                        {
+                            "street": <calle>,
+                            "country": <país>,
+                            "state": <estado>,
+                            "zip": <CP>,
+                            "apartment": <apartamento (opcional)>
+                        }
+                    ],
+                    "_id": <ID MongoDB>,
+                    "idUser": <ID User>,
+                    "validation": <boleano>,
+                    "comment": <comentario de la entrega (opcional)>
+
+                }
+            ]
+            ```
+        * POST:
+            ```json
+            {
+                "mensaje": "Compra creada con exito",
+            }
+            ```
+    * **Códigos de error**:
+        * 404: No encontrado
+            ```json
+            { 
+                "message": "not found"
+            }
+            ```
+        * 200: Acción realizada.
+14. Validación de compra
+    * **Descripción**:
+        * Es una petición para validar despues de la última compra, cómo estuvo la misma.
+    * **URL**:
+        * http://localhost:8080/api/validarCompra/:id_user
+    * **Verbos HTTP**:
+        * PUT
+    * **Headers**:
+        * N/A
+    * **Formato JSON del cuerpo de la solicitud**:
+        * El único que tiene formato JSON de solicitud es el POST:
+        ```json
+        {
+            "validation": <booleano>,
+            "comment": <comentario de la entrega (opcional)>
+        }
+        ```
+    * **Formato JSON de la respuesta**:
+        ```json
+        {
+            "mensaje": "Validacion de compra agregada",
+        }
+        ```
+    * **Códigos de error**:
+        * 500: error con MongoDB o del servidor
+        * 200: Validación realizada.
 
 ## 3.6 Pasos a seguir para utilizar el proyecto
 

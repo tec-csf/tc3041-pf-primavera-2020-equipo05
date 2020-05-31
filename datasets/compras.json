@@ -1,0 +1,67 @@
+[
+ {
+  "products": [
+    {
+      "idProd": 1,
+      "name": "Xbox One",
+      "condition": "Regular",
+      "description": "Xbox One con algunos detalles en la parte trasera pero con muy buena funcionalidad",
+      "quantity": 1,
+      "price": 3200,
+      "url": "https://www.eluniversal.com.mx/sites/default/files/2020/02/13/xbox-one-jordan.jpg"
+    },
+    {
+      "idProd": 1,
+      "name": "Xbox One",
+      "condition": "Regular",
+      "description": "Xbox One con algunos detalles en la parte trasera pero con muy buena funcionalidad",
+      "quantity": 1,
+      "price": 3200,
+      "url": "https://www.eluniversal.com.mx/sites/default/files/2020/02/13/xbox-one-jordan.jpg"
+    },
+    {
+      "idProd": 1,
+      "name": "Xbox One",
+      "condition": "Regular",
+      "description": "Xbox One con algunos detalles en la parte trasera pero con muy buena funcionalidad",
+      "quantity": 1,
+      "price": 3200,
+      "url": "https://www.eluniversal.com.mx/sites/default/files/2020/02/13/xbox-one-jordan.jpg"
+    }
+  ],
+  "address": [
+    {
+      "street": "Av. Loma del Parque",
+      "country": "México",
+      "state": "Estado de México",
+      "zip": "52787",
+      "apartment": ""
+    }
+  ],
+  "idUser": 2,
+  "validation": false
+},
+  {
+  "products": [
+    {
+      "idProd": 1,
+      "name": "Xbox One",
+      "condition": "Regular",
+      "description": "Xbox One con algunos detalles en la parte trasera pero con muy buena funcionalidad",
+      "quantity": 1,
+      "price": 3200,
+      "url": "https://www.eluniversal.com.mx/sites/default/files/2020/02/13/xbox-one-jordan.jpg"
+    }
+  ],
+  "address": [
+    {
+      "street": "Blvd Magnocentro 105",
+      "country": "México",
+      "state": "Estado de México",
+      "zip": "52787",
+      "apartment": "D"
+    }
+  ],
+  "idUser": 1,
+  "validation": true
+}]

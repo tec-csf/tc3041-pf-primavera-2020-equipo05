@@ -950,7 +950,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
 ## 3.6 Pasos a seguir para utilizar el proyecto
 
 1) Clonar el repositorio en la carpeta deseada.
-git clone 
+git clone https://github.com/tec-csf/tc3041-pf-primavera-2020-equipo05.git
 2) abrir la carpeta en la terminal y seguir los siguientes comandos.
 cd \tc3041-pf-primavera-2020-equipo05
 cd frontend

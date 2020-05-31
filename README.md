@@ -82,7 +82,7 @@ Para el manejo de sesiónes se utilizó Redis. Esto es para tener las sesiones a
 
 ### 3.3 Frontend
 
-Nuestro Fronend tiene la siguiente estructura.
+Nuestro Frontend tiene la siguiente estructura.
 
     -frontend                       # Carpeta con la solucion del frontend
         -src                        # Carpeta con los modelos y las rutas

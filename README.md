@@ -77,7 +77,7 @@ Para el manejo de sesiónes se uso Redis. Esto es para tener las sesiones activa
 
 ### 3.2 Arquitectura de la solución
 
-https://github.com/tec-csf/tc3041-pf-primavera-2020-equipo05.git/modeloRelacional.png
+https://github.com/tec-csf/tc3041-pf-primavera-2020-equipo05/modeloRelacional.png
 
 ### 3.3 Frontend
 

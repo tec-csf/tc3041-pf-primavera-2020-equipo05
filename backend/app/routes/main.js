@@ -580,12 +580,12 @@ router
 router
   .route("/compra")
   .get(function (req, res) {
-    Compra.find({ }, function (err, carrito) {
+    Compra.find({ }, function (err, compra) {
       if (err) {
         res.send(err);
         return;
       }
-      res.status(200).send(carrito);
+      res.status(200).send(compra);
     })
   });
 

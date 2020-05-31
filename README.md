@@ -55,62 +55,60 @@ Como parte de la entrega final del proyecto, se debe incluir la siguiente inform
 
 ## 2. Descripción del proyecto
 
-Para este proyecto, tuvimos la idea de crear un e-commerce estilo mercado libre en el cual un usuario puede publicar productos, eliminar o editar. Si un usuario elige un producto especifico, puede agregarlo al carrito, pagarlo con una tarjeta de credito o debito especifico.
-El usuario puede hacer las siguientes funciones durante la pagina:
-1) Puede revisar su perfil en donde aparece una foto, sus productos disponibles y puede hacer operaciones como eliminar o agregar productos.
-2) Existe una pestaña en donde el usuario puede publicar lo que este pensando en ese momento, es decir un NewsFeed donde puede publicar cosas y estas aparecen para todos los usuarios conectados a la pagina.
-3) En la pestaña de home, el usuario puede observar los productos mas destacados que hay en la pagina y de acceso rapido para poder comprarlos.
-4) En la pestaña de productos aparecen todos los productos disponibles ofrecidos por todos los vendedores
-5) Contiene un carrito en donde todos los productos deseados pueden ser comprados al mismo tiempo.
-6) En la pestaña de contacto podemos ver informacion de contacto por si el cliente requiere ayuda o contactar a soporte para cualquier situacion
+Para este proyecto, tuvimos la idea de crear un e-commerce estilo mercado libre en el cual un usuario puede publicar sus productos a la venta, eliminarlos o editarlos. Si un usuario elige un producto especifico, puede agregarlo al carrito y después pagar sus productos con su tarjeta de credito.
+El usuario puede hacer las siguientes funciones en la página:
+1) Puede revisar su perfil en donde aparece una foto, sus productos a la venta y puede hacer operaciones como eliminar o agregar los mismos.
+2) Existe una pestaña en donde el usuario puede publicar lo que este pensando en ese momento, es decir un NewsFeed donde puede publicar cualquier cosa y estas aparecen para todos los usuarios conectados a la página y en el futuro.
+3) En la pestaña de home, el usuario puede observar los productos a la venta en la página y de acceso rápido para poder comprarlos.
+4) Contiene un carrito en donde todos los productos deseados que pueden ser comprados al mismo tiempo, en la cual puede eliminar alguno que ya no le interese.
+5) Al comprar y pagar su pedido, el usuario es redirigido a una página para validar su compra, poniendo si llegó bien o no su pedido, además de algún comentario adicional.
+6) En la pestaña de contacto podemos ver información de contacto por si el cliente requiere ayuda o contactar a soporte para cualquier situación.
+7) Los usuarios deben crear su cuenta para poder acceder a la página y consumir los servicios.
 
 ## 3. Solución
 
-Como solución del proyeto se hizo lo siguiente:
+A continuación aparecen desarrollados  los diferentes elementos que forman parte de la solución del proyecto.
 
 ### 3.1 Modelos de *bases de datos* utilizados
 
-Para el manejo de los productos, productos por usuario, informacion del usuario, usuarios, contactos y el news feed se uso la base de datos de MongoDB. Utilizamos esta base de datos ya que es muy escalable a futuro en caso de que se inserte una gran cantidad de productos o de informacion. Otro motivo por el que se uso esta base de datos es gracias a su rapides que tiene para mostrar las consultas lo que puede ayudar al usuario al manejo eficaz de la pagina.
+Para el manejo de los productos, productos por usuario, información del usuario, usuarios, contactos y el newsfeed se usó la Base de Datos de MongoDB. Utilizamos esta base de datos ya que es una que da la oportunidad de escalar el proyecto a futuro, en caso de que se inserte una gran cantidad de productos o de información. Otro motivo por el que se usó esta base de datos es gracias a su rapidez que tiene para mostrar las consultas, lo que puede ayudar al usuario al manejo eficaz de la página.
 
-Para el manejo de sesiónes se uso Redis. Esto es para tener las sesiones activas y actualizadas. La ventaja de esto es que Redis ocupa una llave (ID) y un valor para esa llave (E-Mail) con lo cual puede mantener la sesiónes activas, actualizadas y con el tiempo de expiración deseado lo que ayuda a manejar las sesiones con mayor seguridad y eficacia.
+Para el manejo de sesiónes se utilizó Redis. Esto es para tener las sesiones activas y actualizadas. La ventaja de esto es que Redis ocupa una llave (ID) y un valor para esa llave (E-Mail) con lo cual puede mantener la sesiónes activas, actualizadas y con el tiempo de expiración deseado lo que ayuda a manejar las sesiones con mayor seguridad y eficacia.
 
 
 ### 3.2 Arquitectura de la solución
 
-https://github.com/tec-csf/tc3041-pf-primavera-2020-equipo05.git
-
-*Abrir la imagen modeloRelacional.png
+![Diagrama](datasets/modeloRelacional.png)
 
 ### 3.3 Frontend
 
 Nuestro Fronend tiene la siguiente estructura.
 
-    -frontend                       #carpeta con la solucion del frontend
-        -src                        #Carpeta con los modelos y las rutas
+    -frontend                       # Carpeta con la solucion del frontend
+        -src                        # Carpeta con los modelos y las rutas
             -app
-                -interfaces         #Se encuentran las interfaces para la direccion, producto y el usuario
-                -main-components    #Se encuentran los principales componentes usados en la pagina.
-                -modules            #Modulos principales del frontend
-                    -comprador      #Carpeta con los componentes del carrito, comprar, home y validar-compra
-                    -info           #Carpeta con los componentes de Contacto y el NewsFeed   
-                    -shared         #Carpeta con los componentes crear-cuenta, log-in y perfil
-                    -vendedor       #Carpeta con los componentes agregar y editar
-                -services           #Carpeta con los servicios del NewsFeed y del usuario
-            -assets                 #Carpeta con las imagenes de Perfiles
-            -data                   #Carpeta con el Json de productos [data.json]
-            -environments           #Carpeta con environment.ts para pasar a productivo
-            -style                  #Carpeta con los archivos .css usados, main.ts y test.ts
-        -angular.json               #JSON con las dependencias enlistadas de Angular
-        -package-lock.json          #JSON con las dependencias enlistadas de Node
-        -package.json               #JSON con las dependencias enlistadas de Node
-        -proxy-conf.json            #JSON del proxy
-        -tsconfig.app.json             #Carpetas con opciones de compilacion
+                -interfaces         # Se encuentran las interfaces para la dirección, producto y el usuario
+                -main-components    # Se encuentran los principales componentes usados en la pagina.
+                -modules            # Modulos principales del frontend
+                    -comprador      # Carpeta con los componentes del carrito, comprar, home y validar-compra
+                    -info           # Carpeta con los componentes de Contacto y el NewsFeed   
+                    -shared         # Carpeta con los componentes crear-cuenta, log-in y perfil
+                    -vendedor       # Carpeta con los componentes agregar y editar
+                -services           # Carpeta con los servicios del NewsFeed y del usuario
+            -assets                 # Carpeta con las imagenes de Perfiles
+            -environments           # Carpeta con environment.ts para pasar a productivo
+            -style                  # Carpeta con los archivos .css usados, main.ts y test.ts
+        -angular.json               # JSON con las dependencias enlistadas de Angular
+        -package-lock.json          # JSON con las dependencias enlistadas de Node
+        -package.json               # JSON con las dependencias enlistadas de Node
+        -proxy-conf.json            # JSON del proxy
+        -tsconfig.app.json          # Carpetas con opciones de compilacion
         -tsconfig.spec.json
         -tslint.json
 
-Como se puede ver nuestro proyecto fue creado con las librerias de Angular y principalmente se uso el lenguaje de Javascript y el TypeScript para la solucion del proyecto.
-Como se explica arriba nuestros modulos prinicpales de la pagina se pueden ver dentro de la carpeta Modules donde estan situados todos los modulos creados en la pagina de manera ordenada. Los estilos de la pagina fueron hechos con bootstrap y los .css se encuentran dentro de la carpeta de Styles.
-Por ultimo en Package.json se enlistan todas las librerias usadas las cuales se ecplicaran mas a detalle en la parte 3.3.3
+Como se puede ver nuestro proyecto fue creado con las librerias de Angular y principalmente se usó el lenguaje de Javascript y el TypeScript para la solucion del proyecto.
+Como se explica previamente, nuestros modulos principales de la página se pueden ver dentro de la carpeta Modules, donde están situados todos los módulos creados en la página de manera ordenada. Los estilos de la pagina fueron hechos con bootstrap y los CSS se encuentran dentro de la carpeta de Styles.
+Por último, en Package.json se enlistan todas las librerias usadas las cuales se explicarán más a detalle en la parte 3.3.3
 
 
 #### 3.3.1 Lenguaje de programación
@@ -123,7 +121,7 @@ Angular
 
 #### 3.3.3 Librerías de funciones o dependencias
 
-    @angular/animations": "~9.1.3",
+    "@angular/animations": "~9.1.3",
     "@angular/cdk": "^9.2.4",
     "@angular/common": "~9.1.3",
     "@angular/compiler": "~9.1.3",
@@ -949,19 +947,19 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
 
 ## 3.6 Pasos a seguir para utilizar el proyecto
 
-1) Clonar el repositorio en la carpeta deseada.
+1. Clonar el repositorio en la carpeta deseada.
 git clone https://github.com/tec-csf/tc3041-pf-primavera-2020-equipo05.git
-2) abrir la carpeta en la terminal y seguir los siguientes comandos.
+2. Abrir la carpeta en la terminal y seguir los siguientes comandos.
 cd \tc3041-pf-primavera-2020-equipo05
 cd frontend
 cd src
-3) instalamos todas las dependencias de node en el frontend copiando el siguiente comando
+3. instalamos todas las dependencias de node en el frontend copiando el siguiente comando
 \tc3041-pf-primavera-2020-equipo05\frontend\src>npm install
-4) Al terminar la instalacion, volvemos a ir a la carpeta de \tc3041-pf-primavera-2020-equipo05\
-5) ahora instalaremos las dependencias para el backend con el siguiente comando
+4. Al terminar la instalacion, volvemos a ir a la carpeta de \tc3041-pf-primavera-2020-equipo05\
+5. Ahora instalaremos las dependencias para el backend con el siguiente comando
 cd backend
 \tc3041-pf-primavera-2020-equipo05\backend>npm install
-6)por ultimo, regresamos a la ruta \tc3041-pf-primavera-2020-equipo05\frontend\src> y pondremos el siguiente comando
+6. Por último, regresamos a la ruta \tc3041-pf-primavera-2020-equipo05\frontend\src> y pondremos el siguiente comando
 \tc3041-pf-primavera-2020-equipo05\frontend\src>ng serve --open
 
 ## 4. Referencias

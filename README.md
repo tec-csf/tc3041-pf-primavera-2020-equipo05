@@ -949,7 +949,20 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
 
 ## 3.6 Pasos a seguir para utilizar el proyecto
 
-*[Incluya aquí una guía paso a paso para poder utilizar el proyecto, desde la clonación del repositorio hasta el despliegue de la solución en una plataforma en la nube.]*
+1) Clonar el repositorio en la carpeta deseada.
+git clone 
+2) abrir la carpeta en la terminal y seguir los siguientes comandos.
+cd \tc3041-pf-primavera-2020-equipo05
+cd frontend
+cd src
+3) instalamos todas las dependencias de node en el frontend copiando el siguiente comando
+\tc3041-pf-primavera-2020-equipo05\frontend\src>npm install
+4) Al terminar la instalacion, volvemos a ir a la carpeta de \tc3041-pf-primavera-2020-equipo05\
+5) ahora instalaremos las dependencias para el backend con el siguiente comando
+cd backend
+\tc3041-pf-primavera-2020-equipo05\backend>npm install
+6)por ultimo, regresamos a la ruta \tc3041-pf-primavera-2020-equipo05\frontend\src> y pondremos el siguiente comando
+\tc3041-pf-primavera-2020-equipo05\frontend\src>ng serve --open
 
 ## 4. Referencias
 

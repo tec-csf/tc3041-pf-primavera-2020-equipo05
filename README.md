@@ -266,7 +266,7 @@ Javascript
 
 * Redis, versión 3.0.2
 
-El endpoint raiz que utilizamos fue, antes del despliegue en la nube: http://localhost:8080/api/
+El endpoint raiz que utilizamos fue, desplegado en GCP: http://104.154.210.48:8080/api/
 
 A partir del endpoint inicial, implementamos las siguientes rutas:
 
@@ -274,7 +274,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
     * **Descripción**:
         * Es una petición para poder hace login. Se accede a MongoDB para verificar las credenciales, y después se crea una sesión en Redis.
     * **URL**:
-        * http://localhost:8080/api/login
+        * http://104.154.210.48:8080/api/login
     * **Verbos HTTP**:
         * POST
     * **Headers**:
@@ -315,7 +315,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
     * **Descripción**:
         * Es una petición para poder hace logout. Se destruye la sesión de Redis.
     * **URL**:
-        * http://localhost:8080/api/logout
+        * http://104.154.210.48:8080/api/logout
     * **Verbos HTTP**:
         * GET
     * **Headers**:
@@ -334,7 +334,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
     * **Descripción**:
         * Es una petición para insertar un producto nuevo a la venta, por medio del usuario quien lo vende. Se accede a MongoDB para obtener el último ID e ingresar los productos en el usuario correspondiente.
     * **URL**:
-        * http://localhost:8080/api/productsUsers
+        * http://104.154.210.48:8080/api/productsUsers
     * **Verbos HTTP**:
         * POST
     * **Headers**:
@@ -375,7 +375,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
     * **Descripción**:
         * Es una petición para obtener todos los productos para desplegarlos en el home. Recibe como parámetro la página actual para implementar el filtrado, la cual se hace for usuario.
     * **URL**:
-        * http://localhost:8080/api/allProducts/:page
+        * http://104.154.210.48:8080/api/allProducts/:page
     * **Verbos HTTP**:
         * GET
     * **Headers**:
@@ -427,7 +427,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
             * Actualizar un producto (PUT).
             * Eliminar un producto (DELETE)
     * **URL**:
-        * http://localhost:8080/api/products/:id_product
+        * http://104.154.210.48:8080/api/products/:id_product
     * **Verbos HTTP**:
         * GET, PUT, DELETE
     * **Headers**:
@@ -486,7 +486,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
     * **Descripción**:
         * Es una petición para obtener los productos en venta que tiene un usuario en específico. Hace una agregación para acceder a los productos, además de regresar los datos principales del usuario para el perfil, siendo la foto de perfil, nombre y apellidos.
     * **URL**:
-        * http://localhost:8080/api/productsUsers/:id_user
+        * http://104.154.210.48:8080/api/productsUsers/:id_user
     * **Verbos HTTP**:
         * GET
     * **Headers**:
@@ -532,7 +532,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
             * Obtener todos los posts, junto a los datos principales del usuario para el perfil, siendo la foto de perfil, nombre y apellidos. (GET).
             * Postear algo nuevo (POST).
     * **URL**:
-        * http://localhost:8080/api/newsFeed
+        * http://104.154.210.48:8080/api/newsFeed
     * **Verbos HTTP**:
         * GET, POST
     * **Headers**:
@@ -581,7 +581,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
             * Obtener la información de todos los usuarios, excluyendo el password hasheado, por seguridad (GET).
             * Crear un usuario nuevo, accediendo a la colección users para obtener el último ID e ingresar un usuario nuevo (POST).
     * **URL**:
-        * http://localhost:8080/api/users
+        * http://104.154.210.48:8080/api/users
     * **Verbos HTTP**:
         * GET, POST
     * **Headers**:
@@ -636,7 +636,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
             * Actualizar un usuario (PUT).
             * Eliminar un usuario, en el cual primero se elimina ese usuario con susu productos en venta, y después la información del usuario (DELETE).
     * **URL**:
-        * http://localhost:8080/api/users/:id_user
+        * http://104.154.210.48:8080/api/users/:id_user
     * **Verbos HTTP**:
         * GET, PUT, DELETE
     * **Headers**:
@@ -696,7 +696,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
     * **Descripción**:
         * Es una petición para obtener todos los carritos actuales
     * **URL**:
-        * http://localhost:8080/api/carrito
+        * http://104.154.210.48:8080/api/carrito
     * **Verbos HTTP**:
         * GET
     * **Headers**:
@@ -737,7 +737,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
             * Agregar un producto al carrito del usuario, en la cual se valida si ya está el producto en el carrito para no duplicarlo (POST).
             * Eliminar un producto del carrito del usuario (DELETE).
     * **URL**:
-        * http://localhost:8080/api/carrito/:id_user
+        * http://104.154.210.48:8080/api/carrito/:id_user
     * **Verbos HTTP**:
         * GET, POST, DELETE
     * **Headers**:
@@ -808,7 +808,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
     * **Descripción**:
         * Es una petición para obtener todos las compras
     * **URL**:
-        * http://localhost:8080/api/compra
+        * http://104.154.210.48:8080/api/compra
     * **Verbos HTTP**:
         * GET
     * **Headers**:
@@ -858,7 +858,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
             * Obtener la última compra del usuario (GET).
             * Comprar los productos del carrito del usuario, en el cual se eliminan los productos del carrito y del inventario (POST).
     * **URL**:
-        * http://localhost:8080/api/compra/:id_user
+        * http://104.154.210.48:8080/api/compra/:id_user
     * **Verbos HTTP**:
         * GET, POST
     * **Headers**:
@@ -922,7 +922,7 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
     * **Descripción**:
         * Es una petición para validar despues de la última compra, cómo estuvo la misma.
     * **URL**:
-        * http://localhost:8080/api/validarCompra/:id_user
+        * http://104.154.210.48:8080/api/validarCompra/:id_user
     * **Verbos HTTP**:
         * PUT
     * **Headers**:
@@ -947,21 +947,51 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
 
 ## 3.6 Pasos a seguir para utilizar el proyecto
 
-1. Clonar el repositorio en la carpeta deseada.
-git clone https://github.com/tec-csf/tc3041-pf-primavera-2020-equipo05.git
-2. Abrir la carpeta en la terminal y seguir los siguientes comandos.
-cd \tc3041-pf-primavera-2020-equipo05
-cd frontend
-cd src
-3. instalamos todas las dependencias de node en el frontend copiando el siguiente comando
-\tc3041-pf-primavera-2020-equipo05\frontend\src>npm install
-4. Al terminar la instalacion, volvemos a ir a la carpeta de \tc3041-pf-primavera-2020-equipo05\
-5. Ahora instalaremos las dependencias para el backend con el siguiente comando
-cd backend
-\tc3041-pf-primavera-2020-equipo05\backend>npm install
-6. Por último, regresamos a la ruta \tc3041-pf-primavera-2020-equipo05\frontend\src> y pondremos el siguiente comando
-\tc3041-pf-primavera-2020-equipo05\frontend\src>ng serve --open
+1. **Clonar el repositorio en la carpeta deseada.**
+ ```git clone https://github.com/tec-csf/tc3041-pf-primavera-2020-equipo05.git ```
+2.  **Configuración de MongoDB en Atlas y en MongoDB Compass:**
+    1. Cree una cuenta en [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+    2. Genere un clúster nuevo, en la sección *Clusters*, *Build a New Cluster*.
+    3. Cambie la configuración de seguridad a su clúster para permitir conexiones desde cualquier dirección IP (0.0.0.0/0), en la sección *Network Access*, *Add IP Address*.
+    4.  Agregue un usuario/contraseña con permisos de Lectura/Escritura en las bases de datos, en la sección *Database Access*, *Add New Database User*.
+    5.  Establezca una conexión al clúster utilizando MongoDB Compass:
+	    1. Seleccione el clúster creado en la sección *Clusters*, *Connect*, *Connect Using MongoDB Compass*.
+	    2. Siga las instrucciones directamente en la página, para instalar MongoDB Compass.
+	    3. Copie el *connection string*.
+	    4. Ingrese a MongoDB Compass y pegue su *connection string*.
+    6. Cree una base de datos nombrada *vendeTuProducto*.
+    7. Cree las colecciones base para poblar en un inicio la base de datos (*users*, *productsUser* y *newsFeed*).
+    8. Inserte los scripts correspondientes a cada colección, ingresando a la misma y seleccionando *Import Data* y tomando como input *JSON*.
+        * Users: [users.json](datasets/users.json)
+        * productsUsers: [productsUsers.json](datasets/clases.json)
+        * NewsFeed:  [newsFeed.json](datasets/newsFeed.json)
+3. **Modifique el url de conexión hacia la base de datos:**
+    Vaya al archivo [setupServer.js](backend/setupServer.js), a la línea 25: ```const uri = "mongodb+srv://bases_user:bases123@cluster0-f9acl.gcp.mongodb.net/vendeTuProducto?retryWrites=true&w=majority";``` y modifique el url por el *connection string* tomado en el paso 2 de estas instrucciones.
+4. **Instalar las respectivas referencias:**
+    1. Abrir la carpeta en la terminal y seguir los siguientes comandos.
+        ```
+            cd \tc3041-pf-primavera-2020-equipo05
+            cd frontend
+        ```
+    2. Instalamos todas las dependencias de node en el frontend copiando el siguiente comando
+    ```npm install```
+    3. Al terminar la instalacion, cambiamos a la carpeta de backend
+    4. Ahora instalaremos las dependencias para el backend con el siguiente comando
+    ```npm install```
+    5. Regresamos a la ruta de frontend y corremos el siguiente comando, para correr la aplicación de angular.
+    ```ng serve --open```
+    6. Abrimos otra terminal, y vamos a la carpeta de backend, y corremos el servidor con el comando ```node server.js```
+5. **Despliegue en la nube en Google Cloud:**
+    1. Haga un fork del repositorio clonado
+    2. Ingrese al siguiente link: https://console.cloud.google.com/projectselector/kubernetes?_ga=2.234483550.1925495775.1590965294-161755894.1572358355
+    3. Cree un proyecto nuevo.
+    4. Espere a que la API se habilite.
+    5. Vaya a la sección de clústeres y cree un clúster nuevo.
+    6. Vaya a la sección de cargas de trabajo y seleccione desplegar.
 
 ## 4. Referencias
 
-*[Incluya aquí las referencias a sitios de interés, datasets y cualquier otra información que haya utilizado para realizar el proyecto y que le puedan ser de utilidad a otras personas que quieran usarlo como referencia]*
+* https://console.cloud.google.com/projectselector/kubernetes?_ga=2.234483550.1925495775.1590965294-161755894.1572358355
+* https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app
+* https://nodejs.org/fr/docs/guides/nodejs-docker-webapp/
+* https://medium.com/@wkrzywiec/build-and-run-angular-application-in-a-docker-container-b65dbbc50be8

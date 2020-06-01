@@ -13,9 +13,6 @@ app.get('/',function(req,res){
   if(req.session.key) {
       // if email key is sent redirect.
       res.redirect('/home');
-  } else {
-      // else go to home page.
-      res.render('index.html');
   }
 });
 

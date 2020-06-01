@@ -994,9 +994,9 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
     10. Haga click en *LISTO* y *CONTINUAR*
     11. Regrese a la sección de *cargas de trabajo* y seleccione la carga creada.
     12. Haga click en *exponer* y en la sección de puertos, configure ambos puertos a *8080* y continue.
-    13. Pruebe la ip externa que provee GCP en algún servicio como *Postman* o en cualquier navegador. Puede ir a la ruta *".../api/allProducts/1* y comprobar que tenga un JSON de respuesta con los productos agregados.
-    14. Si el paso anterior fue exitoso, copie la ip y en el repositorio que hizo fork, en el archivo [user.service.ts](frontend/src/app/services/user.service.ts), en la línea 7 ```const endpoint = 'http://104.154.210.48:8080/api/';```, remplace el URL por la ip, dejando la ruta *"/api/*.
-    15. Realice el paso anterior en el archivo [news-feed.service.ts](frontend/src/app/services/news-feed.service.ts), en la línea 4 ```const endpoint = 'http://104.154.210.48:8080/api/newsFeed';```, remplace el URL por la ip, dejando la ruta *"/api/newsFeed*.
+    13. Pruebe la ip externa que provee GCP en algún servicio como *Postman* o en cualquier navegador. Puede ir a la ruta ```.../api/allProducts/1``` y comprobar que tenga un JSON de respuesta con los productos agregados.
+    14. Si el paso anterior fue exitoso, copie la ip y en el repositorio que hizo fork, en el archivo [user.service.ts](frontend/src/app/services/user.service.ts), en la línea 7 ```const endpoint = 'http://104.154.210.48:8080/api/';```, remplace el URL por la ip, dejando la ruta ```/api/```
+    15. Realice el paso anterior en el archivo [news-feed.service.ts](frontend/src/app/services/news-feed.service.ts), en la línea 4 ```const endpoint = 'http://104.154.210.48:8080/api/newsFeed';```, remplace el URL por la ip, dejando la ruta ```/api/newsFeed```
     16. Suba las modificaciones al repositorio.
     17. Vaya a la sección de *cargas de trabajo* y seleccione *desplegar*.
     18. Seleccione nueva imagen de contenedor.

@@ -983,11 +983,30 @@ A partir del endpoint inicial, implementamos las siguientes rutas:
     6. Abrimos otra terminal, y vamos a la carpeta de backend, y corremos el servidor con el comando ```node server.js```
 5. **Despliegue en la nube en Google Cloud:**
     1. Haga un fork del repositorio clonado
-    2. Ingrese al siguiente link: https://console.cloud.google.com/projectselector/kubernetes?_ga=2.234483550.1925495775.1590965294-161755894.1572358355
-    3. Cree un proyecto nuevo.
+    2. Ingrese al siguiente link: [Kubernetes Engine](https://console.cloud.google.com/projectselector/kubernetes?_ga=2.234483550.1925495775.1590965294-161755894.1572358355)
+    3. Cree un proyecto nuevo o seleccione alguno ya existente.
     4. Espere a que la API se habilite.
-    5. Vaya a la sección de clústeres y cree un clúster nuevo.
-    6. Vaya a la sección de cargas de trabajo y seleccione desplegar.
+    5. Vaya a la sección de *clústeres* y cree un clúster nuevo.
+    6. Vaya a la sección de *cargas de trabajo* y seleccione *desplegar*.
+    7. Seleccione nueva imagen de contenedor.
+    8. Seleccione como proveedor de repositorio Github, y el nombre del repositorio que hizo fork.
+    9. Ingrese en ruta de Dockerfile ```backend/Dockerfile```
+    10. Haga click en *LISTO* y *CONTINUAR*
+    11. Regrese a la sección de *cargas de trabajo* y seleccione la carga creada.
+    12. Haga click en *exponer* y en la sección de puertos, configure ambos puertos a *8080* y continue.
+    13. Pruebe la ip externa que provee GCP en algún servicio como *Postman* o en cualquier navegador. Puede ir a la ruta *".../api/allProducts/1* y comprobar que tenga un JSON de respuesta con los productos agregados.
+    14. Si el paso anterior fue exitoso, copie la ip y en el repositorio que hizo fork, en el archivo [user.service.ts](frontend/src/app/services/user.service.ts), en la línea 7 ```const endpoint = 'http://104.154.210.48:8080/api/';```, remplace el URL por la ip, dejando la ruta *"/api/*.
+    15. Realice el paso anterior en el archivo [news-feed.service.ts](frontend/src/app/services/news-feed.service.ts), en la línea 4 ```const endpoint = 'http://104.154.210.48:8080/api/newsFeed';```, remplace el URL por la ip, dejando la ruta *"/api/newsFeed*.
+    16. Suba las modificaciones al repositorio.
+    17. Vaya a la sección de *cargas de trabajo* y seleccione *desplegar*.
+    18. Seleccione nueva imagen de contenedor.
+    19. Seleccione como proveedor de repositorio Github, y el nombre del repositorio que hizo fork.
+    20. Ingrese en ruta de Dockerfile ```frontend/Dockerfile```
+    21. Haga click en *LISTO* y *CONTINUAR*
+    22. Regrese a la sección de *cargas de trabajo* y seleccione la carga creada.
+    23. Haga click en *exponer* y en la sección de puertos, configure ambos puertos a *4200* y continue.
+    24. Pruebe la ip externa de la carga anterior y debería de funcionar como esperado.
+
 
 ## 4. Referencias
 
